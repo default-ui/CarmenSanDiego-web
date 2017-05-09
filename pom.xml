@@ -14,7 +14,6 @@
 	</properties>
 
 	<build>
-	<pluginManagment>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
@@ -34,7 +33,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</pluginManagment>
 		
 	</build>
 
