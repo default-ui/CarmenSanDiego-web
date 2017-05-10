@@ -32,4 +32,20 @@ class IniciarJuegoRestAPI {
     	ok(this.juego.pedirPista(parsedLugar))
     }
     
+    @Get("/paises")
+    //TODO: hay recursion infinita aca jajaja ;_;
+    def getPaises() {
+    	ok(this.juego.mapa.paises.toJson)
+    }
+
+	//req tiene la forma /paises?nomb="Argentina"
+  @Get("/paises/:nombre")		
+   def getPaisesById(String nomb) {
+    	ok(this.juego.mapa.getPaisFromName(nomb).toJson)
+    }    
+    
+    
+    
+    
+    
 }
