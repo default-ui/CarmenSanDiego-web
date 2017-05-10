@@ -19,6 +19,7 @@ class IniciarJuegoRestAPI {
 
     new(Juego juego) {
         this.juego = juego
+        this.juego.crearCaso
     }
     
     @Get("/inicio-juego")
@@ -29,11 +30,11 @@ class IniciarJuegoRestAPI {
     }
     
     @Get("/pista-de-lugar")
-    def getPistaDelLugar(String lugar, String juego) {
+    def getPistaDelLugar(String lugar) {
     	response.contentType = ContentType.APPLICATION_JSON
-    	val lugar2 = new Banco().toJson
-    	val parsedLugar = lugar2.fromJson(Banco)
-    	ok(this.juego.pedirPista(parsedLugar))
+    	val lugarActual = this.juego.paisActual.getLugar(lugar)
+    	//ok(lugarActual.toJson)
+    	ok(this.juego.pedirPista(lugarActual).toJson)
     }
     
     @Get("/paises")
@@ -59,11 +60,11 @@ class IniciarJuegoRestAPI {
         }
     }
     
-    @Post("/viajar")
-    def viajar(String destinoId, String juego) {
-    	val destino = this.juego.getPais(destinoId)
-    	this.juego.viajar(destino)
-    }
+//    @Post("/viajar")
+//    def viajar(String destinoId, String juego) {
+//    	val destino = this.juego.getPais(destinoId)
+//    	this.juego.viajar(destino)
+//    }
     
     private def getErrorJson(String message) {
         '{ "error": "' + message + '" }'
