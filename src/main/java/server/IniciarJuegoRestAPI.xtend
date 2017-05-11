@@ -5,10 +5,9 @@ import org.uqbar.xtrest.json.JSONUtils
 import carmenSanDiego.Juego
 import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.api.annotation.Controller
-import carmenSanDiego.Lugar
-import carmenSanDiego.Banco
 import carmenSanDiego.Villano
 import org.uqbar.xtrest.api.annotation.Post
+import miniModel.EstadoJuego
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -22,11 +21,10 @@ class IniciarJuegoRestAPI {
         this.juego.crearCaso
     }
     
-    @Get("/inicio-juego")
-    //TODO: tiene que devolver un juego. nuestro JUEGO es su CASO
+    @Post("/inicio-juego")
     def getCaso() {
         response.contentType = ContentType.APPLICATION_JSON
-       	ok(this.juego.crearCaso.objeto.toJson)
+       	ok(new EstadoJuego(this.juego).toJson)
     }
     
     @Get("/pista-de-lugar")
