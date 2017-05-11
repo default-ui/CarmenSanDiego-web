@@ -9,6 +9,8 @@ import carmenSanDiego.Lugar
 import carmenSanDiego.Banco
 import carmenSanDiego.Villano
 import org.uqbar.xtrest.api.annotation.Post
+import miniModel.EstadoJuego
+import miniModel.MiniPais
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -16,10 +18,13 @@ class IniciarJuegoRestAPI {
     extension JSONUtils = new CarmenSonUtils
 
 	Juego juego
+	EstadoJuego estado
 
     new(Juego juego) {
         this.juego = juego
         this.juego.crearCaso
+        this.estado = new EstadoJuego(juego)
+        
     }
     
     @Get("/inicio-juego")
@@ -33,20 +38,23 @@ class IniciarJuegoRestAPI {
     def getPistaDelLugar(String lugar) {
     	response.contentType = ContentType.APPLICATION_JSON
     	val lugarActual = this.juego.paisActual.getLugar(lugar)
-    	//ok(lugarActual.toJson)
     	ok(this.juego.pedirPista(lugarActual).toJson)
     }
     
     @Get("/paises")
-    //TODO: hay recursion infinita aca jajaja ;_;
     def getPaises() {
-    	ok(this.juego.mapa.paises.toJson)
+    	response.contentType = ContentType.APPLICATION_JSON
+    	ok(this.estado.mapamundi.toJson)
     }
 
 	//req tiene la forma /paises?nomb="Argentina"
-  	@Get("/paises/:nombre")		
+	// TODO: Aca hay un error porque no puedo hacer que funcione con @Get("/paises/:nomb")
+	// La query la hace asi como esta pero no es el nombre que corresponde ni la manera (el parametro
+	// deberia estar en la annotation)
+  	@Get("/paise")		
    	def getPaisesById(String nomb) {
-    	ok(this.juego.mapa.getPaisFromName(nomb).toJson)
+   		response.contentType = ContentType.APPLICATION_JSON
+    	ok(this.estado.getPaisById(nomb).toJson)
     }    
     
     @Get("/orden-de-arresto")
