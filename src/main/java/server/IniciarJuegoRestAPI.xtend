@@ -1,19 +1,17 @@
 package server
 
-import org.uqbar.xtrest.api.annotation.Get
-import org.uqbar.xtrest.json.JSONUtils
 import carmenSanDiego.Juego
-import org.uqbar.xtrest.http.ContentType
-import org.uqbar.xtrest.api.annotation.Controller
-import carmenSanDiego.Villano
-import org.uqbar.xtrest.api.annotation.Post
-import miniModel.EstadoJuego
-import miniModel.MiniPais
-import miniModel.MiniMapamundi
-import org.uqbar.xtrest.api.annotation.Put
-import org.uqbar.xtrest.api.annotation.Delete
-import org.uqbar.xtrest.api.annotation.Body
 import carmenSanDiego.Pais
+import carmenSanDiego.Villano
+import miniModel.EstadoJuego
+import miniModel.MiniMapamundi
+import org.uqbar.xtrest.api.annotation.Body
+import org.uqbar.xtrest.api.annotation.Controller
+import org.uqbar.xtrest.api.annotation.Delete
+import org.uqbar.xtrest.api.annotation.Get
+import org.uqbar.xtrest.http.ContentType
+import org.uqbar.xtrest.json.JSONUtils
+import org.uqbar.xtrest.api.annotation.Post
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -29,7 +27,7 @@ class IniciarJuegoRestAPI {
         this.juego.crearCaso
         this.estado = new EstadoJuego(juego)
         this.mapamundi = new MiniMapamundi(juego)
-        
+       
     }
     
     @Post("/inicio-juego")
@@ -52,6 +50,7 @@ class IniciarJuegoRestAPI {
     def getPaises() {
     	response.contentType = ContentType.APPLICATION_JSON
     	ok(this.mapamundi.mapa.toJson)
+
     }
 
 	//req tiene la forma /paise/Argentina
@@ -61,6 +60,7 @@ class IniciarJuegoRestAPI {
    	//def getPaisesById(String nomb) {
    		response.contentType = ContentType.APPLICATION_JSON
     	ok(this.mapamundi.getPaisById(nomb).toJson)
+
     }    
     
 //    @Put("paises/:id")
@@ -92,8 +92,8 @@ class IniciarJuegoRestAPI {
     def emitirOrdenPara(String villano, String juego) {
     	response.contentType = ContentType.APPLICATION_JSON
         var parsedVillano = villano.fromJson(Villano)
-        if (parsedVillano == null) {
-			notFound(getErrorJson("No existe villano"))
+        if (parsedVillano === null) {
+			notFound(getErrorJson("No existe libro con ese id"))
 		} else {
 		 	ok(this.juego.emitirOrdenDeArresto(parsedVillano).toJson)
         }
