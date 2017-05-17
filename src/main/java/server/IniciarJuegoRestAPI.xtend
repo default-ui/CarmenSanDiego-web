@@ -12,6 +12,7 @@ import org.uqbar.xtrest.api.annotation.Get
 import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.json.JSONUtils
 import org.uqbar.xtrest.api.annotation.Post
+import miniModel.MiniExpediente
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -19,15 +20,10 @@ class IniciarJuegoRestAPI {
     extension JSONUtils = new CarmenSonUtils
 
 	Juego juego
-	EstadoJuego estado
-	MiniMapamundi mapamundi
 
     new(Juego juego) {
         this.juego = juego
         this.juego.crearCaso
-        this.estado = new EstadoJuego(juego)
-        this.mapamundi = new MiniMapamundi(juego)
-       
     }
     
     @Post("/inicio-juego")
@@ -49,17 +45,17 @@ class IniciarJuegoRestAPI {
     @Get("/paises")
     def getPaises() {
     	response.contentType = ContentType.APPLICATION_JSON
-    	ok(this.mapamundi.mapa.toJson)
+    	ok(new MiniMapamundi(this.juego.mapa).toJson)
 
     }
 
-	//req tiene la forma /paise/Argentina
+	//req tiene la forma /paises/Argentina
 	// estaria funcionando
   	@Get("/paises/:nomb")	
   	def getPaisesById() {	
    	//def getPaisesById(String nomb) {
    		response.contentType = ContentType.APPLICATION_JSON
-    	ok(this.mapamundi.getPaisById(nomb).toJson)
+    	ok(new MiniMapamundi(this.juego.mapa).getPaisById(nomb).toJson)
 
     }    
     
@@ -68,13 +64,14 @@ class IniciarJuegoRestAPI {
 //    	ok()
 //		//TODO: consultar no tengo ideaaa
 //    }
+
 	//request de la forma http://localhost:3000/paises/Brasil
 	//falta mensaje de ok (strign dicendo ok)
 	// consultar: y con el dominio que pasa?
 	@Delete('/paises/:id')
 	def eliminarPais(){
 		response.contentType = ContentType.APPLICATION_JSON
-		this.mapamundi.eliminarPaisMapamundi(id)
+		new MiniMapamundi(this.juego.mapa).eliminarPaisMapamundi(id)
 		ok()
 	}
 	
@@ -107,6 +104,12 @@ class IniciarJuegoRestAPI {
     
     private def getErrorJson(String message) {
         '{ "error": "' + message + '" }'
+    }
+    
+    @Get("/villanos")
+    def getVillanos() {
+    	response.contentType = ContentType.APPLICATION_JSON
+    	ok(new MiniExpediente(this.juego.expediente).toJson)
     }
    
  }
