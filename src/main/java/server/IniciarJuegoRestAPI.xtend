@@ -9,6 +9,9 @@ import carmenSanDiego.Villano
 import org.uqbar.xtrest.api.annotation.Post
 import miniModel.EstadoJuego
 import miniModel.MiniPais
+import miniModel.MiniMapamundi
+import org.uqbar.xtrest.api.annotation.Put
+import org.uqbar.xtrest.api.annotation.Delete
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -17,11 +20,13 @@ class IniciarJuegoRestAPI {
 
 	Juego juego
 	EstadoJuego estado
+	MiniMapamundi mapamundi
 
     new(Juego juego) {
         this.juego = juego
         this.juego.crearCaso
         this.estado = new EstadoJuego(juego)
+        this.mapamundi = new MiniMapamundi(juego)
         
     }
     
@@ -29,8 +34,11 @@ class IniciarJuegoRestAPI {
     def getCaso() {
         response.contentType = ContentType.APPLICATION_JSON
        	ok(new EstadoJuego(this.juego).toJson)
+       //	ok(this.estado.toJson)
     }
     
+    
+    //la request tiene la forma http://localhost:3000/pista-de-lugar?lugar=Banco
     @Get("/pista-de-lugar")
     def getPistaDelLugar(String lugar) {
     	response.contentType = ContentType.APPLICATION_JSON
@@ -41,18 +49,32 @@ class IniciarJuegoRestAPI {
     @Get("/paises")
     def getPaises() {
     	response.contentType = ContentType.APPLICATION_JSON
-    	ok(this.estado.mapamundi.toJson)
+    	ok(this.mapamundi.mapa.toJson)
     }
 
-	//req tiene la forma /paises?nomb="Argentina"
-	// TODO: Aca hay un error porque no puedo hacer que funcione con @Get("/paises/:nomb")
-	// La query la hace asi como esta pero no es el nombre que corresponde ni la manera (el parametro
-	// deberia estar en la annotation)
-  	@Get("/paise")		
-   	def getPaisesById(String nomb) {
+	//req tiene la forma /paise/Argentina
+	// estaria funcionando
+  	@Get("/paises/:nomb")	
+  	def getPaisesById() {	
+   	//def getPaisesById(String nomb) {
    		response.contentType = ContentType.APPLICATION_JSON
-    	ok(this.estado.getPaisById(nomb).toJson)
+    	ok(this.mapamundi.getPaisById(nomb).toJson)
     }    
+    
+//    @Put("paises/:id")
+//    def actualizarPais(){
+//    	ok()
+//		//TODO: consultar no tengo ideaaa
+//    }
+	//request de la forma http://localhost:3000/paises/Brasil
+	//falta mensaje de ok 
+	// consultar: y con el dominio que pasa?
+	@Delete('/paises/:id')
+	def eliminarPais(){
+		response.contentType = ContentType.APPLICATION_JSON
+		this.mapamundi.eliminarPaisMapamundi(id)
+		ok()
+	}
     
     @Get("/orden-de-arresto")
     def emitirOrdenPara(String villano, String juego) {
