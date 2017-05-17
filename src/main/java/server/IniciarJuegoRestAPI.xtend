@@ -12,6 +12,8 @@ import miniModel.MiniPais
 import miniModel.MiniMapamundi
 import org.uqbar.xtrest.api.annotation.Put
 import org.uqbar.xtrest.api.annotation.Delete
+import org.uqbar.xtrest.api.annotation.Body
+import carmenSanDiego.Pais
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -67,7 +69,7 @@ class IniciarJuegoRestAPI {
 //		//TODO: consultar no tengo ideaaa
 //    }
 	//request de la forma http://localhost:3000/paises/Brasil
-	//falta mensaje de ok 
+	//falta mensaje de ok (strign dicendo ok)
 	// consultar: y con el dominio que pasa?
 	@Delete('/paises/:id')
 	def eliminarPais(){
@@ -75,13 +77,23 @@ class IniciarJuegoRestAPI {
 		this.mapamundi.eliminarPaisMapamundi(id)
 		ok()
 	}
+	
+	// ERROR: no puede instanciar lugares porque es una clase abstracta
+	// como deberia actulizar el dominio? y el minimapamundi?
+	@Post('/paises')
+	def crearPais(@Body String body){
+		response.contentType = ContentType.APPLICATION_JSON
+		val Pais nuevoPais = body.fromJson(Pais)
+		ok(nuevoPais.toJson)
+		
+	}
     
     @Get("/orden-de-arresto")
     def emitirOrdenPara(String villano, String juego) {
     	response.contentType = ContentType.APPLICATION_JSON
         var parsedVillano = villano.fromJson(Villano)
         if (parsedVillano == null) {
-			notFound(getErrorJson("No existe libro con ese id"))
+			notFound(getErrorJson("No existe villano"))
 		} else {
 		 	ok(this.juego.emitirOrdenDeArresto(parsedVillano).toJson)
         }
