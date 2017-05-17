@@ -13,6 +13,8 @@ import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.json.JSONUtils
 import org.uqbar.xtrest.api.annotation.Post
 import miniModel.MiniExpediente
+import miniModel.MiniVillano
+import org.uqbar.xtrest.api.annotation.Put
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -51,7 +53,7 @@ class IniciarJuegoRestAPI {
 
 	//req tiene la forma /paises/Argentina
 	// estaria funcionando
-  	@Get("/paises/:nomb")	
+  	@Get("/pais/:nomb")	
   	def getPaisesById() {	
    	//def getPaisesById(String nomb) {
    		response.contentType = ContentType.APPLICATION_JSON
@@ -68,7 +70,7 @@ class IniciarJuegoRestAPI {
 	//request de la forma http://localhost:3000/paises/Brasil
 	//falta mensaje de ok (strign dicendo ok)
 	// consultar: y con el dominio que pasa?
-	@Delete('/paises/:id')
+	@Delete('/pais/:id')
 	def eliminarPais(){
 		response.contentType = ContentType.APPLICATION_JSON
 		new MiniMapamundi(this.juego.mapa).eliminarPaisMapamundi(id)
@@ -77,7 +79,7 @@ class IniciarJuegoRestAPI {
 	
 	// ERROR: no puede instanciar lugares porque es una clase abstracta
 	// como deberia actulizar el dominio? y el minimapamundi?
-	@Post('/paises')
+	@Post('/pais')
 	def crearPais(@Body String body){
 		response.contentType = ContentType.APPLICATION_JSON
 		val Pais nuevoPais = body.fromJson(Pais)
@@ -111,6 +113,36 @@ class IniciarJuegoRestAPI {
     	response.contentType = ContentType.APPLICATION_JSON
     	ok(new MiniExpediente(this.juego.expediente).toJson)
     }
+    
+    @Get('/villano/:id')
+	def buscarVillano() {
+		response.contentType = ContentType.APPLICATION_JSON
+		val villano = this.juego.expediente.getVillanoById(Integer.parseInt(id))
+		ok(new MiniVillano(villano).toJson)
+	}
+    
+    @Delete('/villano/:id')
+	def eliminarVillano() {
+		response.contentType = ContentType.APPLICATION_JSON
+		this.juego.expediente.eliminarVillanoConId(Integer.parseInt(id))
+		ok()
+	}
+	
+	@Post('/villano')
+	def agregarVillano(@Body String body) {
+		response.contentType = ContentType.APPLICATION_JSON
+		val villano = body.fromJson(Villano)
+		this.juego.expediente.agregarVillano(villano)
+		ok()
+	}
+	
+	@Put('/villano/:id')
+	def editarVillano(@Body String body) {
+		response.contentType = ContentType.APPLICATION_JSON
+		val villano = body.fromJson(Villano)
+		this.juego.expediente.reemplazarVillanoConId(Integer.parseInt(id), villano)
+		ok()
+	}
    
  }
    
