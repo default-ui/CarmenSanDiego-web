@@ -17,7 +17,7 @@ import org.uqbar.xtrest.api.annotation.Post
 import org.uqbar.xtrest.api.annotation.Put
 import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.json.JSONUtils
-import server.requestData.EmitirOrdenRequest
+import miniModel.EmitirOrdenRequest
 
 @Controller
 class IniciarJuegoRestAPI {
