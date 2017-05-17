@@ -1,14 +1,14 @@
 package server
 
-import org.uqbar.xtrest.api.annotation.Get
-import org.uqbar.xtrest.json.JSONUtils
 import carmenSanDiego.Juego
-import org.uqbar.xtrest.http.ContentType
-import org.uqbar.xtrest.api.annotation.Controller
 import carmenSanDiego.Villano
-import org.uqbar.xtrest.api.annotation.Post
 import miniModel.EstadoJuego
-import miniModel.MiniPais
+import org.uqbar.xtrest.api.annotation.Controller
+import org.uqbar.xtrest.api.annotation.Get
+import org.uqbar.xtrest.api.annotation.Post
+import org.uqbar.xtrest.http.ContentType
+import org.uqbar.xtrest.json.JSONUtils
+import miniModel.MiniMapamundi
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -19,10 +19,9 @@ class IniciarJuegoRestAPI {
 	EstadoJuego estado
 
     new(Juego juego) {
-        this.juego = juego
-        this.juego.crearCaso
-        this.estado = new EstadoJuego(juego)
-        
+		this.juego = juego
+		this.juego.crearCaso
+		this.estado = new EstadoJuego(juego)
     }
     
     @Post("/inicio-juego")
@@ -41,7 +40,7 @@ class IniciarJuegoRestAPI {
     @Get("/paises")
     def getPaises() {
     	response.contentType = ContentType.APPLICATION_JSON
-    	ok(this.estado.mapamundi.toJson)
+    	ok(this.juego.mapa.toJson)
     }
 
 	//req tiene la forma /paises?nomb="Argentina"
@@ -51,14 +50,15 @@ class IniciarJuegoRestAPI {
   	@Get("/paise")		
    	def getPaisesById(String nomb) {
    		response.contentType = ContentType.APPLICATION_JSON
-    	ok(this.estado.getPaisById(nomb).toJson)
+   		var pais = (new MiniMapamundi(this.juego)).getPaisById(nomb)
+    	ok(pais.toJson)
     }    
     
     @Get("/orden-de-arresto")
     def emitirOrdenPara(String villano, String juego) {
     	response.contentType = ContentType.APPLICATION_JSON
         var parsedVillano = villano.fromJson(Villano)
-        if (parsedVillano == null) {
+        if (parsedVillano === null) {
 			notFound(getErrorJson("No existe libro con ese id"))
 		} else {
 		 	ok(this.juego.emitirOrdenDeArresto(parsedVillano).toJson)
