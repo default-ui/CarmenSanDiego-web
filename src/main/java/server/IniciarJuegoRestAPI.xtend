@@ -3,18 +3,21 @@ package server
 import carmenSanDiego.Juego
 import carmenSanDiego.Pais
 import carmenSanDiego.Villano
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import miniModel.EstadoJuego
+import miniModel.MiniExpediente
 import miniModel.MiniMapamundi
+import miniModel.MiniVillano
+import org.uqbar.commons.model.UserException
 import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.api.annotation.Delete
 import org.uqbar.xtrest.api.annotation.Get
+import org.uqbar.xtrest.api.annotation.Post
+import org.uqbar.xtrest.api.annotation.Put
 import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.json.JSONUtils
-import org.uqbar.xtrest.api.annotation.Post
-import miniModel.MiniExpediente
-import miniModel.MiniVillano
-import org.uqbar.xtrest.api.annotation.Put
+import server.requestData.EmitirOrdenRequest
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -42,6 +45,26 @@ class IniciarJuegoRestAPI {
     	response.contentType = ContentType.APPLICATION_JSON
     	val lugarActual = this.juego.paisActual.getLugar(lugar)
     	ok(this.juego.pedirPista(lugarActual).toJson)
+    }
+    
+    @Post("/emitirOrdenPara")
+    def emitirOrdenDeArresto(@Body String body) {
+        response.contentType = ContentType.APPLICATION_JSON
+        try {
+	        val EmitirOrdenRequest ordenRequest = body.fromJson(EmitirOrdenRequest)
+	        try {
+	        	// TODO: usar juegoID
+	        	var villano = juego.expediente.getVillano(ordenRequest.villanoId)
+	        	juego.emitirOrdenDeArresto(villano)
+				ok("Orden emitida correctamente")
+	        } 
+	        catch (UserException exception) {
+	        	badRequest(getErrorJson(exception.message))
+	        }
+        } 
+        catch (UnrecognizedPropertyException exception) {
+        	badRequest(getErrorJson("El body debe ser un VillanoID"))
+        }
     }
     
     @Get("/paises")
