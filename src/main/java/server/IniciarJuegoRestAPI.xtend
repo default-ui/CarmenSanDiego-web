@@ -1,5 +1,6 @@
 package server
 
+
 import carmenSanDiego.Juego
 import carmenSanDiego.Pais
 import carmenSanDiego.Villano
@@ -18,6 +19,7 @@ import org.uqbar.xtrest.api.annotation.Put
 import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.json.JSONUtils
 import miniModel.EmitirOrdenRequest
+import miniModel.DataPais
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -67,28 +69,33 @@ class IniciarJuegoRestAPI {
         }
     }
     
+    /*
+     * req tiene la forma http://localhost:3000/paises
+     */
     @Get("/paises")
     def getPaises() {
     	response.contentType = ContentType.APPLICATION_JSON
-    	ok(new MiniMapamundi(this.juego.mapa).toJson)
+    	ok(new MiniMapamundi(this.juego.mapa).mapa.toJson)
 
     }
 
-	//req tiene la forma /paises/Argentina
-	// estaria funcionando
-  	@Get("/pais/:nomb")	
+	/*
+	 * req tiene la forma http://localhost:3000/pais/1
+	 * (sin terminar)
+	 */
+  	@Get("/pais/:id")	
   	def getPaisesById() {	
-   	//def getPaisesById(String nomb) {
    		response.contentType = ContentType.APPLICATION_JSON
-    	ok(new MiniMapamundi(this.juego.mapa).getPaisById(nomb).toJson)
+    	ok(new MiniMapamundi(this.juego.mapa).getPaisById(Integer.valueOf(id)).toJson)
 
     }    
     
-//    @Put("paises/:id")
-//    def actualizarPais(){
-//    	ok()
-//		//TODO: consultar no tengo ideaaa
-//    }
+    @Put("/paises/:id")
+    def actualizarPais(@Body String body){
+  		var DataPais paisTemp = body.fromJson(DataPais)
+    	ok(paisTemp.toJson)
+		//TODO: consultar no tengo ideaaa
+    }
 
 	//request de la forma http://localhost:3000/paises/Brasil
 	//falta mensaje de ok (strign dicendo ok)
