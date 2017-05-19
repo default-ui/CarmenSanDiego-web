@@ -3,6 +3,7 @@ package server
 import carmenSanDiego.Juego
 import utils.DummyData
 import org.uqbar.xtrest.api.XTRest
+import utils.CarmenSanDiegoRepoWeb
 
 class CarmenSanDiegoApp {
 	
@@ -11,7 +12,7 @@ class CarmenSanDiegoApp {
 		val expediente = DummyData.crearExpedienteDummy
 		var juego = new Juego(mapa, expediente)
 		
-        XTRest.startInstance(new IniciarJuegoRestAPI(juego), 3000)
+        XTRest.startInstance(new IniciarJuegoRestAPI(new CarmenSanDiegoRepoWeb), 3000)
     }
 	
 }

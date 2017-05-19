@@ -1,6 +1,4 @@
 package server
-
-
 import carmenSanDiego.Juego
 import carmenSanDiego.Pais
 import carmenSanDiego.Villano
@@ -20,34 +18,55 @@ import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.json.JSONUtils
 import miniModel.EmitirOrdenRequest
 import miniModel.DataPais
+import utils.CarmenSanDiegoRepoWeb
 
 @Controller
 class IniciarJuegoRestAPI {
 	
     extension JSONUtils = new CarmenSonUtils
+//
+//	Juego juego
+//
+//    new(Juego juego) {
+//        this.juego = juego
+//        this.juego.crearCaso
+//    }
 
-	Juego juego
-
-    new(Juego juego) {
-        this.juego = juego
-        this.juego.crearCaso
+	CarmenSanDiegoRepoWeb repo
+    
+        new(CarmenSanDiegoRepoWeb carmenRepo) {
+        this.repo = carmenRepo
     }
     
-    @Post("/inicio-juego")
-    def getCaso() {
+//    @Post("/inicio-juego")
+//    def getCaso() {
+//        response.contentType = ContentType.APPLICATION_JSON
+//       	ok(new EstadoJuego(this.juego).toJson)
+//       //	ok(this.estado.toJson)
+//    }
+    
+    ////http://localhost:3000/iniciarJuego
+    @Post("/iniciarJuego")
+    def getPartida() {
         response.contentType = ContentType.APPLICATION_JSON
-       	ok(new EstadoJuego(this.juego).toJson)
-       //	ok(this.estado.toJson)
+           var juego = new Juego(repo.juegoID, repo.mapa, repo.expediente)
+        	repo.actualizarJuego(juego)
+       	ok(new EstadoJuego(juego).toJson)
     }
+    /////
     
-    
-    //la request tiene la forma http://localhost:3000/pista-de-lugar?lugar=Banco
-    @Get("/pista-de-lugar")
+    //la request tiene la forma http://localhost:3000/pista-de-lugar/1?lugar=Banco
+    @Get("/pistaDelLugar/:id")
     def getPistaDelLugar(String lugar) {
     	response.contentType = ContentType.APPLICATION_JSON
-    	val lugarActual = this.juego.paisActual.getLugar(lugar)
-    	ok(this.juego.pedirPista(lugarActual).toJson)
+    	var Juego caso = repo.getCaso(Integer.valueOf(id)) as Juego
+    	val lugarActual = caso.paisActual.getLugar(lugar)
+    	ok(caso.pedirPista(lugarActual).toJson)
     }
+    
+    /*
+     * Request con la forma http://localhost:3000/emitirOrdenPara (hay que pasarle un body)
+     */
     
     @Post("/emitirOrdenPara")
     def emitirOrdenDeArresto(@Body String body) {
@@ -55,10 +74,17 @@ class IniciarJuegoRestAPI {
         try {
 	        val EmitirOrdenRequest ordenRequest = body.fromJson(EmitirOrdenRequest)
 	        try {
-	        	// TODO: usar juegoID
-	        	var villano = juego.expediente.getVillano(ordenRequest.villanoId)
-	        	juego.emitirOrdenDeArresto(villano)
-				ok("Orden emitida correctamente")
+	        	var Juego caso = repo.getCaso(ordenRequest.casoId)
+	        	
+	        	var villano = caso.expediente.getVillano(ordenRequest.villanoId)
+	        	caso.emitirOrdenDeArresto(villano)
+	        	//ok(ordenRequest.toJson)
+	        	//ok(villano.toJson)
+				//ok(caso.ordenDeArresto.toJson)
+				//ok(repo.partidas.get(0).ordenDeArresto.toJson)
+				// postman me tira un error rarisimo ??: Unexpected 'O' pero probe todo lo anterior
+				// y es correcto.
+	        	ok("Orden emitida correctamente")
 	        } 
 	        catch (UserException exception) {
 	        	badRequest(getErrorJson(exception.message))
@@ -75,102 +101,114 @@ class IniciarJuegoRestAPI {
     @Get("/paises")
     def getPaises() {
     	response.contentType = ContentType.APPLICATION_JSON
-    	ok(new MiniMapamundi(this.juego.mapa).mapa.toJson)
+    	ok(new MiniMapamundi(this.repo.mapa).mapa.toJson)
 
     }
 
 	/*
 	 * req tiene la forma http://localhost:3000/pais/1
-	 * (sin terminar)
+	 * 
 	 */
   	@Get("/pais/:id")	
   	def getPaisesById() {	
    		response.contentType = ContentType.APPLICATION_JSON
-    	ok(new MiniMapamundi(this.juego.mapa).getPaisById(Integer.valueOf(id)).toJson)
+    	ok(new MiniMapamundi(this.repo.mapa).getPaisById(Integer.valueOf(id)).toJson)
 
     }    
-    
-    @Put("/paises/:id")
-    def actualizarPais(@Body String body){
-  		var DataPais paisTemp = body.fromJson(DataPais)
-    	ok(paisTemp.toJson)
-		//TODO: consultar no tengo ideaaa
-    }
-
-	//request de la forma http://localhost:3000/paises/Brasil
-	//falta mensaje de ok (strign dicendo ok)
-	// consultar: y con el dominio que pasa?
-	@Delete('/pais/:id')
-	def eliminarPais(){
-		response.contentType = ContentType.APPLICATION_JSON
-		new MiniMapamundi(this.juego.mapa).eliminarPaisMapamundi(id)
-		ok()
-	}
-	
-	// ERROR: no puede instanciar lugares porque es una clase abstracta
-	// como deberia actulizar el dominio? y el minimapamundi?
-	@Post('/pais')
-	def crearPais(@Body String body){
-		response.contentType = ContentType.APPLICATION_JSON
-		val Pais nuevoPais = body.fromJson(Pais)
-		ok(nuevoPais.toJson)
-		
-	}
-    
-    @Get("/orden-de-arresto")
-    def emitirOrdenPara(String villano, String juego) {
-    	response.contentType = ContentType.APPLICATION_JSON
-        var parsedVillano = villano.fromJson(Villano)
-        if (parsedVillano === null) {
-			notFound(getErrorJson("No existe libro con ese id"))
-		} else {
-		 	ok(this.juego.emitirOrdenDeArresto(parsedVillano).toJson)
-        }
-    }
-    
-//    @Post("/viajar")
-//    def viajar(String destinoId, String juego) {
-//    	val destino = this.juego.getPais(destinoId)
-//    	this.juego.viajar(destino)
+//    
+//    @Put("/paises/:id")
+//    def actualizarPais(@Body String body){
+//  		var DataPais paisTemp = body.fromJson(DataPais)
+//    	ok(paisTemp.toJson)
+//		//TODO: consultar no tengo ideaaa
 //    }
-    
+//
+//	//request de la forma http://localhost:3000/paises/Brasil
+//	//falta mensaje de ok (strign dicendo ok)
+//	// consultar: y con el dominio que pasa?
+//	@Delete('/pais/:id')
+//	def eliminarPais(){
+//		response.contentType = ContentType.APPLICATION_JSON
+//		new MiniMapamundi(this.juego.mapa).eliminarPaisMapamundi(id)
+//		ok()
+//	}
+//	
+//	// ERROR: no puede instanciar lugares porque es una clase abstracta
+//	// como deberia actulizar el dominio? y el minimapamundi?
+//	@Post('/pais')
+//	def crearPais(@Body String body){
+//		response.contentType = ContentType.APPLICATION_JSON
+//		val Pais nuevoPais = body.fromJson(Pais)
+//		ok(nuevoPais.toJson)
+//		
+//	}
+//    
+
+
+//    
+////    @Post("/viajar")
+////    def viajar(String destinoId, String juego) {
+////    	val destino = this.juego.getPais(destinoId)
+////    	this.juego.viajar(destino)
+////    }
+//    
     private def getErrorJson(String message) {
         '{ "error": "' + message + '" }'
     }
     
+    /*
+     * Request con la forma http://localhost:3000/villanos
+     */
+    
     @Get("/villanos")
     def getVillanos() {
     	response.contentType = ContentType.APPLICATION_JSON
-    	ok(new MiniExpediente(this.juego.expediente).toJson)
+    	ok(new MiniExpediente(this.repo.expediente).toJson)
     }
     
+    /*
+     * Request con la forma http://localhost:3000/villano/0
+     */
     @Get('/villano/:id')
 	def buscarVillano() {
 		response.contentType = ContentType.APPLICATION_JSON
-		val villano = this.juego.expediente.getVillanoById(Integer.parseInt(id))
+		val villano = this.repo.expediente.getVillanoById(Integer.parseInt(id))
 		ok(new MiniVillano(villano).toJson)
 	}
+	
+	/*
+     * Request con la forma http://localhost:3000/villano/0
+     */
     
     @Delete('/villano/:id')
 	def eliminarVillano() {
 		response.contentType = ContentType.APPLICATION_JSON
-		this.juego.expediente.eliminarVillanoConId(Integer.parseInt(id))
+		this.repo.expediente.eliminarVillanoConId(Integer.parseInt(id))
 		ok()
 	}
+	
+	/*
+     * Request con la forma http://localhost:3000/villano + un body
+     */
 	
 	@Post('/villano')
 	def agregarVillano(@Body String body) {
 		response.contentType = ContentType.APPLICATION_JSON
 		val villano = body.fromJson(Villano)
-		this.juego.expediente.agregarVillano(villano)
-		ok()
+		villano.id = repo.villanoId
+		this.repo.expediente.agregarVillano(villano)
+		ok(new MiniVillano(villano).toJson)
 	}
+	
+	 /*
+     * Request con la forma http://localhost:3000/villano/0 + un body
+     */
 	
 	@Put('/villano/:id')
 	def editarVillano(@Body String body) {
 		response.contentType = ContentType.APPLICATION_JSON
 		val villano = body.fromJson(Villano)
-		this.juego.expediente.reemplazarVillanoConId(Integer.parseInt(id), villano)
+		this.repo.expediente.reemplazarVillanoConId(Integer.parseInt(id), villano)
 		ok()
 	}
    
