@@ -19,31 +19,19 @@ import org.uqbar.xtrest.json.JSONUtils
 import miniModel.EmitirOrdenRequest
 import miniModel.DataPais
 import utils.CarmenSanDiegoRepoWeb
+import miniModel.MiniPaisConConexiones
+import miniModel.MiniPais
 
 @Controller
 class IniciarJuegoRestAPI {
 	
     extension JSONUtils = new CarmenSonUtils
-//
-//	Juego juego
-//
-//    new(Juego juego) {
-//        this.juego = juego
-//        this.juego.crearCaso
-//    }
-
+    
 	CarmenSanDiegoRepoWeb repo
     
         new(CarmenSanDiegoRepoWeb carmenRepo) {
         this.repo = carmenRepo
     }
-    
-//    @Post("/inicio-juego")
-//    def getCaso() {
-//        response.contentType = ContentType.APPLICATION_JSON
-//       	ok(new EstadoJuego(this.juego).toJson)
-//       //	ok(this.estado.toJson)
-//    }
     
     ////http://localhost:3000/iniciarJuego
     @Post("/iniciarJuego")
@@ -115,34 +103,43 @@ class IniciarJuegoRestAPI {
     	ok(new MiniMapamundi(this.repo.mapa).getPaisById(Integer.valueOf(id)).toJson)
 
     }    
-//    
-//    @Put("/paises/:id")
-//    def actualizarPais(@Body String body){
-//  		var DataPais paisTemp = body.fromJson(DataPais)
-//    	ok(paisTemp.toJson)
-//		//TODO: consultar no tengo ideaaa
-//    }
-//
-//	//request de la forma http://localhost:3000/paises/Brasil
-//	//falta mensaje de ok (strign dicendo ok)
-//	// consultar: y con el dominio que pasa?
-//	@Delete('/pais/:id')
-//	def eliminarPais(){
-//		response.contentType = ContentType.APPLICATION_JSON
-//		new MiniMapamundi(this.juego.mapa).eliminarPaisMapamundi(id)
-//		ok()
-//	}
-//	
-//	// ERROR: no puede instanciar lugares porque es una clase abstracta
-//	// como deberia actulizar el dominio? y el minimapamundi?
-//	@Post('/pais')
-//	def crearPais(@Body String body){
-//		response.contentType = ContentType.APPLICATION_JSON
-//		val Pais nuevoPais = body.fromJson(Pais)
-//		ok(nuevoPais.toJson)
-//		
-//	}
-//    
+    /*
+	 * req tiene la forma http://localhost:3000/pais/1 + un body
+	 * 
+	 */
+    @Put("/pais/:id")
+    def actualizarPais(@Body String body){
+  		var DataPais paisTemp = body.fromJson(DataPais)
+  		repo.mapa.eliminarPaisById(paisTemp.id)
+  		var paisEditado = new Pais(paisTemp, repo.mapa)
+  		repo.mapa.agregarPais(paisEditado)
+    	ok("Pais actualizado correctamente.")
+    }
+
+	/*
+	 * request tiene la forma: http://localhost:3000/pais/1
+	 */
+	@Delete('/pais/:id')
+	def eliminarPais(){
+		response.contentType = ContentType.APPLICATION_JSON
+		repo.mapa.eliminarPaisById(Integer.valueOf(id))
+		ok("Pais eliminado correctamente.")
+	}
+	
+	/*
+	 * request tiene la forma: http://localhost:3000/pais/ + un body
+	 */
+	@Post('/pais')
+	def crearPais(@Body String body){
+		response.contentType = ContentType.APPLICATION_JSON
+		var DataPais nuevoPaisTemp = body.fromJson(DataPais)
+		nuevoPaisTemp.id = repo.nextIdPais
+		var nuevoPais = new Pais(nuevoPaisTemp, repo.mapa)
+		repo.mapa.agregarPais(nuevoPais)
+		ok(new MiniPais(nuevoPais).toJson)
+		
+	}
+    
 
 
 //    
@@ -195,7 +192,7 @@ class IniciarJuegoRestAPI {
 	def agregarVillano(@Body String body) {
 		response.contentType = ContentType.APPLICATION_JSON
 		val villano = body.fromJson(Villano)
-		villano.id = repo.villanoId
+		villano.id = repo.getNextIdVillano()
 		this.repo.expediente.agregarVillano(villano)
 		ok(new MiniVillano(villano).toJson)
 	}
