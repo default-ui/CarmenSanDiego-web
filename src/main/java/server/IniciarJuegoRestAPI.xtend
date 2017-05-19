@@ -21,6 +21,7 @@ import miniModel.DataPais
 import utils.CarmenSanDiegoRepoWeb
 import miniModel.MiniPaisConConexiones
 import miniModel.MiniPais
+import miniModel.ViajarRequest
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -33,7 +34,10 @@ class IniciarJuegoRestAPI {
         this.repo = carmenRepo
     }
     
-    ////http://localhost:3000/iniciarJuego
+    /*
+     * Request con la forma http://localhost:3000/iniciarJuego.
+     * Inicia una partida (retorna su id)
+     */
     @Post("/iniciarJuego")
     def getPartida() {
         response.contentType = ContentType.APPLICATION_JSON
@@ -41,9 +45,11 @@ class IniciarJuegoRestAPI {
         	repo.actualizarJuego(juego)
        	ok(new EstadoJuego(juego).toJson)
     }
-    /////
     
-    //la request tiene la forma http://localhost:3000/pista-de-lugar/1?lugar=Banco
+    /*
+     * Request con la forma: http://localhost:3000/pista-de-lugar/1?lugar=Banco
+     * Con la id del caso(partida) y el nombre del lugar obtiene la pista del pais actual
+     */
     @Get("/pistaDelLugar/:id")
     def getPistaDelLugar(String lugar) {
     	response.contentType = ContentType.APPLICATION_JSON
@@ -54,6 +60,8 @@ class IniciarJuegoRestAPI {
     
     /*
      * Request con la forma http://localhost:3000/emitirOrdenPara (hay que pasarle un body)
+     * Emite una orden de arresto para un villano en una partida determinada. 
+     * La forma del body es:  { "villanoId": 6, "casoId": 1}
      */
     
     @Post("/emitirOrdenPara")
@@ -66,12 +74,6 @@ class IniciarJuegoRestAPI {
 	        	
 	        	var villano = caso.expediente.getVillano(ordenRequest.villanoId)
 	        	caso.emitirOrdenDeArresto(villano)
-	        	//ok(ordenRequest.toJson)
-	        	//ok(villano.toJson)
-				//ok(caso.ordenDeArresto.toJson)
-				//ok(repo.partidas.get(0).ordenDeArresto.toJson)
-				// postman me tira un error rarisimo ??: Unexpected 'O' pero probe todo lo anterior
-				// y es correcto.
 	        	ok("Orden emitida correctamente")
 	        } 
 	        catch (UserException exception) {
@@ -84,7 +86,8 @@ class IniciarJuegoRestAPI {
     }
     
     /*
-     * req tiene la forma http://localhost:3000/paises
+     * Request tiene la forma http://localhost:3000/paises
+     * Muestra todos la id y el nombre de todos los paises del mapamundi
      */
     @Get("/paises")
     def getPaises() {
@@ -94,8 +97,8 @@ class IniciarJuegoRestAPI {
     }
 
 	/*
-	 * req tiene la forma http://localhost:3000/pais/1
-	 * 
+	 * Request tiene la forma http://localhost:3000/pais/1
+	 * Devuelve informacion especifica (conexiones, caracteristicas) del pais consultado
 	 */
   	@Get("/pais/:id")	
   	def getPaisesById() {	
@@ -104,8 +107,10 @@ class IniciarJuegoRestAPI {
 
     }    
     /*
-	 * req tiene la forma http://localhost:3000/pais/1 + un body
-	 * 
+	 * Request tiene la forma http://localhost:3000/pais/1 + un body.
+	 * Edita un pais en cuestion.
+	 * La forma del body es: { "id": 7,"nombre": "Egipto", "lugares": [ "Embajada",...], "conexiones": [{"nombre": "Cuba",
+      "id": 2}, ...]}
 	 */
     @Put("/pais/:id")
     def actualizarPais(@Body String body){
@@ -117,7 +122,8 @@ class IniciarJuegoRestAPI {
     }
 
 	/*
-	 * request tiene la forma: http://localhost:3000/pais/1
+	 * Request tiene la forma: http://localhost:3000/pais/1
+	 * Borra un pais en cuestion
 	 */
 	@Delete('/pais/:id')
 	def eliminarPais(){
@@ -127,7 +133,10 @@ class IniciarJuegoRestAPI {
 	}
 	
 	/*
-	 * request tiene la forma: http://localhost:3000/pais/ + un body
+	 * Request tiene la forma: http://localhost:3000/pais/ + un body
+	 * Crea un pais y lo agrega al mapamundi
+	 ** La forma del body es: {"nombre": "Egipto", "lugares": [ "Embajada",...], "conexiones": [{"nombre": "Cuba",
+      "id": 2}, ...]}
 	 */
 	@Post('/pais')
 	def crearPais(@Body String body){
@@ -141,20 +150,28 @@ class IniciarJuegoRestAPI {
 	}
     
 
-
-//    
-////    @Post("/viajar")
-////    def viajar(String destinoId, String juego) {
-////    	val destino = this.juego.getPais(destinoId)
-////    	this.juego.viajar(destino)
-////    }
-//    
+   /*
+     * Request con la forma http://localhost:3000/viajar + un body
+     * Viaja a un pais conectado al actual
+     * La forma del body es: {"destinoId": 2, "casoId": 1}
+     */
+    
+    @Post("/viajar")
+    def viajar(@Body String body) {
+    	var viajarRequest = body.fromJson(ViajarRequest)
+    	var juego = this.repo.getCaso(viajarRequest.casoId)
+    	val destino = this.repo.mapa.getPaisFromId(viajarRequest.destinoId)
+    	juego.viajar(destino)
+    	ok(new EstadoJuego(juego).toJson)
+    }
+    
     private def getErrorJson(String message) {
         '{ "error": "' + message + '" }'
     }
     
     /*
      * Request con la forma http://localhost:3000/villanos
+     * Retorna la lista de todos los villanos
      */
     
     @Get("/villanos")
@@ -165,6 +182,7 @@ class IniciarJuegoRestAPI {
     
     /*
      * Request con la forma http://localhost:3000/villano/0
+     * Devuelve un villano en particular detalladamente
      */
     @Get('/villano/:id')
 	def buscarVillano() {
@@ -175,6 +193,7 @@ class IniciarJuegoRestAPI {
 	
 	/*
      * Request con la forma http://localhost:3000/villano/0
+     * Elimina un villano en cuestion
      */
     
     @Delete('/villano/:id')
@@ -186,6 +205,8 @@ class IniciarJuegoRestAPI {
 	
 	/*
      * Request con la forma http://localhost:3000/villano + un body
+     * Agrega un villano sospechoso al expediente
+     * La forma del body es: {"nombre": "Carmen San Diego","sexo": "Femenino", "senasParticulares": ["Pelo Rojo",...], "hobbies": ["Juega Tenis"]}
      */
 	
 	@Post('/villano')
@@ -199,6 +220,9 @@ class IniciarJuegoRestAPI {
 	
 	 /*
      * Request con la forma http://localhost:3000/villano/0 + un body
+     * Edita un villano existente
+     * * La forma del body es: {"id": 1, "nombre": "Carmen San Diego","sexo": "Femenino", "senasParticulares": ["Pelo Rojo",...],
+     *  "hobbies": ["Juega Tenis"]}
      */
 	
 	@Put('/villano/:id')
