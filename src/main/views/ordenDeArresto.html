@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es" ng-app="ordenDeArrestoApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Orden de Arresto</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+
+</head>
+
+<body ng-controller="OrdenDeArrestoController as orden" style="padding: 16px">
+<h1>Orden de arresto:</h1>
+
+<form>
+    <div>
+        <label>Emitida contra:</label>
+        <span id="orden-emitida-js">{{orden.ordenEmitida}}</span>
+    </div>
+    <div class="col-md-4 well" style="margin-left: 16px">
+        <div class="col-md-12">
+            <label>Pedir orden contra:</label>
+            <select class="form-control" ng-change="orden.villanoSeleccionado(this)">
+                <option data-ng-repeat="villano in orden.villanos" value={{villano.villanoId}}>{{villano.nombre}}</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <input type="button" ng-click="emitirOrden()"
+                   class="btn-info form-control"
+                   value="Pedir orden" style="margin-top: 8px">
+        </div>
+    </div>
+</form>
+
+<!-- nuestro jscript -->
+<script src="../javascript/ordenDeArresto.js"></script>
+
+</body>
+</html>
