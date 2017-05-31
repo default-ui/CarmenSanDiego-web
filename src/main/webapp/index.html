@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" ng-app="mapamundiApp">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <!-- BOOTSTRAP -->
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+
+  <!-- ANGULAR  -->
+  <script src="node_modules/angular/angular.min.js"></script>
+</head>
+
+
+<body ng-controller="MapamundiCtrl as mapamundi">
+
+<div class="container">
+  <div class="page-header">
+    <h1>
+      Mapamundi
+    </h1>
+  </div>
+
+  <div class="well-lg">
+    <div class="col-sm-4">
+      <div class="" style="height: 500px;overflow: auto" >
+        <table class="table table-bordered table-hover example-animate-container">
+          <tr class="table-info">
+            <th>País</th>
+            <th></th>
+          </tr>
+          <tr data-ng-repeat="pais in mapamundi.paises">
+            <td  vertical-align: "middle">{{pais.nombre}}</td>
+            <td nowrap class="col-xs-2">
+              <button type="button" class="btn btn-primary" data-ng-click="LibroCtrl.editarLibro(libro)" aria-label="Editar">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-danger" data-ng-click="LibroCtrl.eliminar(libro);" aria-label="Eliminar">
+                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>                
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary" data-ng-click="">Nuevo</button>
+    </div>
+    <div class="col-sm-1">
+    </div>
+    <div class="col-lg-6 well well-lg">
+      <div>
+        <form name="paisForm" role="form">
+          <fieldset>
+            <div class="form-group">
+                <label for="titulo">Nombre</label>
+                <input data-ng-model="LibroCtrl.nuevoLibro.titulo" type="text" id="nombre" class="form-control" placeholder="">
+                <hr style="height:1px;border:none;color:#0fb;background-color:#0fb;" />
+            </div>
+            <div class="form-group">
+                <table class="table table-bordered table-hover table-condensed example-animate-container">
+                  <tr class="table-info">
+                    <th>Características</th>
+                    <th></th>
+                  </tr>
+                  <!--<tr data-ng-repeat="caracteristica in caracteristica.pais">-->
+                  <td  vertical-align: "middle">caracteristica 01</td>
+                  <td nowrap class="col-xs-1">
+                      <button type="button" class="btn btn-danger" data-ng-click="LibroCtrl.eliminar(libro);" aria-label="Eliminar">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>                
+                      </button>
+                  </td>
+                  </tr>
+                </table>
+                <table>
+                  <td>
+                  <input data-ng-model="LibroCtrl.nuevoLibro.autor" type="text" id="disabledTextInput" class="form-control" placeholder="">
+                  </td>
+                  <td nowrap class="col-xs-1">
+                      <button type="button" class="btn btn-success" data-ng-click="LibroCtrl.eliminar(libro);" aria-label="Agregar">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>                
+                      </button>
+                  </td>
+                </table>
+                <hr style="height:1px;border:none;color:#0fb;background-color:#0fb;" />
+            </div>
+            <div class="form-group">
+                <table class="table table-bordered table-hover table-condensed example-animate-container">
+                  <tr class="table-info">
+                    <th>Conexiones</th>
+                    <th></th>
+                  </tr>
+                  <!--<tr data-ng-repeat="caracteristica in caracteristica.pais">-->
+                  <td  vertical-align: "middle">conexion 01</td>
+                  <td nowrap class="col-xs-1">
+                      <button type="button" class="btn btn-danger" data-ng-click="LibroCtrl.eliminar(libro);" aria-label="Eliminar">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>                
+                      </button>
+                  </td>
+                  </tr>
+                </table>
+                <table>
+                  <td>
+                  <input data-ng-model="LibroCtrl.nuevoLibro.autor" type="text" id="disabledTextInput" class="form-control" placeholder="">
+                  </td>
+                  <td nowrap class="col-xs-1">
+                      <button type="button" class="btn btn-success" data-ng-click="LibroCtrl.eliminar(libro);" aria-label="Agregar">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>                
+                      </button>
+                  </td>
+                </table>
+                <hr style="height:1px;border:none;color:#0fe;background-color:#0fe;" />
+            </div>
+            <div class="form-group">
+                <table class="table table-bordered table-hover table-condensed example-animate-container">
+                  <tr class="table-info">
+                    <th>Lugares de Interés</th>
+                    <th></th>
+                  </tr>
+                  <!--<tr data-ng-repeat="caracteristica in caracteristica.pais">-->
+                  <td  vertical-align: "middle">lugar 01</td>
+                  <td nowrap class="col-xs-1">
+                      <button type="button" class="btn btn-danger" data-ng-click="LibroCtrl.eliminar(libro);" aria-label="Eliminar">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>                
+                      </button>
+                  </td>
+                  </tr>
+                </table>
+                <table>
+                  <td>
+                  <input data-ng-model="LibroCtrl.nuevoLibro.autor" type="text" id="disabledTextInput" class="form-control" placeholder="">
+                  </td>
+                  <td nowrap class="col-xs-1">
+                      <button type="button" class="btn btn-success" data-ng-click="LibroCtrl.eliminar(libro);" aria-label="Agregar">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>                
+                      </button>
+                  </td>
+                </table>
+                <hr style="height:1px;border:none;color:#0ff;background-color:#0ff;" />
+                <button type="Submit" class="btn btn-success pull-right" data-ng-click="">Aceptar</button>
+            </div>
+            </fieldset>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="javascript/mapamundi.js"></script>
+<script src="js/serviceCS.js"></script>
+
+</body>
+</html>
+

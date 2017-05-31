@@ -21,3 +21,4 @@ hs_err_pid*
 *._trace
 src/main/xtend-gen
 src/test/xtend-gen
+src/main/webapp/node_modules

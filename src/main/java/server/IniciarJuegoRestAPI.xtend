@@ -174,7 +174,7 @@ class IniciarJuegoRestAPI {
      * Retorna la lista de todos los villanos
      */
     
-    @Get("/villanos")
+    @Get("/villano")
     def getVillanos() {
     	response.contentType = ContentType.APPLICATION_JSON
     	ok(new MiniExpediente(this.repo.expediente).toJson)

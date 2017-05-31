@@ -5,6 +5,7 @@
   "license": "a",
   "dependencies": {
     "angular": "^1.4.4",
+    "angular-resource": "^1.6.4",
     "bootstrap": "^3.3.5",
     "jquery": "^3.2.1"
   }

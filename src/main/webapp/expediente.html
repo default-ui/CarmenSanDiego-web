@@ -1,0 +1,94 @@
+<!DOCTYPE html >
+<html ng-app="csApp">
+	
+	<head>
+  <meta charset="utf-8">
+  <title>Carmen San Diego: Expediente</title>
+
+  <!-- ANGULAR -->
+  <script src="node_modules/angular/angular.min.js"></script>
+ 	<script src="node_modules/angular-resource/angular-resource.min.js"></script>
+	<!-- ANGULAR  -->
+	
+  <!-- BOOTSTRAP -->
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body data-ng-controller="VillanosCtrl as Villanos">
+	    <div class="col-sm-2">
+      <table class="table table-striped table-hover">
+        
+        
+        <thead>
+        <tr>
+          <th>Villano</th>
+        </tr>
+        </thead>
+       
+        <tbody>
+        <tr data-ng-repeat="villano in Villanos.villanos ">
+          <td>{{villano.nombre}}</td>
+
+        </tr>
+        </tbody>
+        
+      </table>
+      <button type="button">Nuevo</button>
+          <p></p>
+		<button type="button">Editar</button>
+    </div>
+	<div class="col-sm-2">
+		<p>Nombre: </p>
+		<p>Sexo: </p>
+		<p>Señas particulares: </p>
+			   
+      <table class="table table-striped table-hover">
+	<thead>
+        <tr>
+          <th>Seña</th>
+        </tr>
+        </thead>
+        <tbody>
+			<tr>
+				<td>Pelo rojo</td>
+			</tr>
+			<tr>
+				<td>Sombrero rojo</td>
+			</tr>
+			<tr>
+				<td>Sobretodo rojo</td>
+			</tr>
+        </tbody>
+      </table>
+      
+            <table class="table table-striped table-hover">
+	<thead>
+        <tr>
+          <th>Hobbie</th>
+        </tr>
+        </thead>
+        <tbody>
+			<tr>
+				<td>Croquet</td>
+			</tr>
+			<tr>
+				<td>Robar</td>
+			</tr>
+			<tr>
+				<td>Coleccionar cosas rojas</td>
+			</tr>
+        </tbody>
+      </table>
+		
+	</div>
+		<div class="col-sm-4">
+		<p>Carmen San Diego</p>
+		<p>Femenino</p>
+		</div>
+		<!-- nuestro jscript -->
+<script src="javascript/appcs.js"></script>
+<script src="javascript/serviceCS.js"></script>
+<script src="javascript/villanosController.js"></script>
+        
+</body>
+</html>
