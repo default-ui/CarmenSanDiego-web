@@ -1,6 +1,4 @@
-	'use strict';
-
-var app = angular.module('mapamundiApp',[]);
+'use strict';
 
 app.controller('MapamundiCtrl', function() {
 	
