@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" ng-app="carmenSanDiegoApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>Carmen SanDiego</title>
+
+    <!-- JQUERY -->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- ANGULAR  -->
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="node_modules/angular-resource/angular-resource.min.js"></script>
+
+    <!-- UNDERSCORE -->
+    <script src="node_modules/underscore/underscore-min.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>
+            Carmen SanDiego
+            <small>AngularJS</small>
+        </h1>
+    </div>
+
+    <div class="well-lg">
+        <div ui-view></div>
+    </div>
+
+</div>
+
+<!-- nuestra aplicacion js -->
+<script src="javascript/app.js"></script>
+<script src="javascript/ordenDeArresto.js"></script>
+<script src="javascript/villanosController.js"></script>
+<script src="javascript/routes.js"></script>
+<script src="javascript/services.js"></script>
+
+</body>
+</html>

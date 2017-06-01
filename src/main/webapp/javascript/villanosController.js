@@ -1,4 +1,4 @@
-app.controller('VillanosCtrl', function($resource, Villanos) {
+app.controller('VillanosController', function($resource, Villanos) {
     'use strict';
 
     var self = this;
@@ -15,4 +15,4 @@ app.controller('VillanosCtrl', function($resource, Villanos) {
     
     this.actualizarLista();
    
-  });
+});

@@ -1,0 +1,21 @@
+<h1>Orden de arresto:</h1>
+
+<form>
+    <div>
+        <label>Emitida contra:</label>
+        <span class="orden-emitida-js">{{ordenCtrl.ordenEmitida}}</span>
+    </div>
+    <div class="col-md-4 well" style="margin-left: 16px">
+        <div class="col-md-12">
+            <label>Pedir orden contra:</label>
+            <select class="form-control select-villano-js" >
+                <option data-ng-repeat="villano in ordenCtrl.villanos" value={{villano.villanoId}}>{{villano.nombre}}</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <input type="button" ng-click="ordenCtrl.emitirOrden()"
+                   class="btn-info form-control"
+                   value="Pedir orden" style="margin-top: 8px">
+        </div>
+    </div>
+</form>
