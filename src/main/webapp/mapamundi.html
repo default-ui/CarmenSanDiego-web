@@ -3,19 +3,32 @@
 
 <head>
   <meta charset="utf-8">
+  
+  
 
-  <!-- ANGULAR -->
-  <script src="node_modules/angular/angular.min.js"></script>
- 	<script src="node_modules/angular-resource/angular-resource.min.js"></script>
-	<!-- ANGULAR  -->
-	
+  <!-- JQUERY -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
   <!-- BOOTSTRAP -->
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-  <!-- BOOTBOX (dialogos de confirmacion) http://bootboxjs.com/ -->
-  <script src="node_modules/bootbox/bootbox.min.js"></script>
-
+  <!-- ANGULAR -->
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular-route/angular-route.min.js"></script>
+  <script src="node_modules/angular-resource/angular-resource.min.js"></script>
+	
+	<!-- BOOTBOX (dialogos de confirmacion) http://bootboxjs.com/ -->
+	<script src="node_modules/bootbox/bootbox.min.js"></script>
+	
+	<!-- ANGULAR  -->
+	<script src="node_modules/angular-animate/angular-animate.js"></script>
+	
+	<!-- LOADING BAR -->
+	<script src="node_modules/angular-loading-bar/build/loading-bar.min.js"></script>
+	<link rel="stylesheet" href="node_modules/angular-loading-bar/build/loading-bar.min.css"/>
+	
 </head>
 
 
@@ -34,7 +47,6 @@
         <table class="table table-bordered table-hover example-animate-container">
           <tr class="table-info">
             <th>País</th>
-            <th></th>
           </tr>
           <tr data-ng-repeat="pais in Paises.paises">
             <td>{{pais.nombre}}</td>
@@ -65,19 +77,18 @@
                 <hr style="height:1px;border:none;color:#0fb;background-color:#0fb;" />
             </div>
             <div class="form-group">
-                <table class="table table-bordered table-hover table-condensed example-animate-container">
-                  <tr class="table-info">
-                    <th>Características</th>
-                    <th></th>
-                  </tr>
-                  <tr >
-                  <td>caracteristica 01</td>
-                  <td nowrap class="col-xs-1">
-                      <button type="button" class="btn btn-danger" data-ng-click="LibroCtrl.eliminar(libro);" aria-label="Eliminar">
-                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>                
-                      </button>
-                  </td>
-                  </tr>
+                <table class="table table-bordered table-hover example-animate-container">
+          			<tr class="table-info">
+            			<th>Características</th>
+          			</tr>
+          			<tr data-ng-repeat="caracteristica in Paises.paisSeleccionado.caracteristicas">
+            			<td>{{caracteristica}}</td>
+            			<td nowrap class="col-xs-2">
+                      	<button type="button" class="btn btn-danger" data-ng-click="Paises.paisSeleccionado.eliminarCaracteristica(caracteristica);" aria-label="Eliminar">
+                        	<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>                
+                      	</button>
+                  		</td>
+                  	</tr>
                 </table>
                 <table>
                  <tr >

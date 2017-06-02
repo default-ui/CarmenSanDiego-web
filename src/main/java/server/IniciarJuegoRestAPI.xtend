@@ -22,6 +22,7 @@ import utils.CarmenSanDiegoRepoWeb
 import miniModel.MiniPaisConConexiones
 import miniModel.MiniPais
 import miniModel.ViajarRequest
+import org.uqbar.xtrest.api.Result
 
 @Controller
 class IniciarJuegoRestAPI {
