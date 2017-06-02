@@ -175,10 +175,10 @@ class IniciarJuegoRestAPI {
      * Retorna la lista de todos los villanos
      */
     
-    @Get("/villano")
+    @Get("/villanos")
     def getVillanos() {
     	response.contentType = ContentType.APPLICATION_JSON
-    	ok(new MiniExpediente(this.repo.expediente).toJson)
+    	ok(new MiniExpediente(this.repo.expediente).villanos.toJson)
     }
     
     /*
@@ -188,8 +188,7 @@ class IniciarJuegoRestAPI {
     @Get('/villano/:id')
 	def buscarVillano() {
 		response.contentType = ContentType.APPLICATION_JSON
-		val villano = this.repo.expediente.getVillanoById(Integer.parseInt(id))
-		ok(new MiniVillano(villano).toJson)
+		ok(new MiniExpediente(this.repo.expediente).getVillanoById(Integer.valueOf(id)).toJson)
 	}
 	
 	/*
