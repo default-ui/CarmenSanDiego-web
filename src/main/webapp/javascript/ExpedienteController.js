@@ -1,4 +1,3 @@
-
 appExp.controller('ExpedienteController', function($resource, Villanos) {
     'use strict';
 
