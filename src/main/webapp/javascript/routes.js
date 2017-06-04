@@ -13,6 +13,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('expediente', {
             url: "/expediente",
             templateUrl: "../views/expediente.html",
-            controller: "VillanosController as villanosCtrl"
+            controller: "ExpedienteController as expedienteCtrl"
+        })
+
+        .state('mapamundi', {
+            url: "/mapamundi",
+            templateUrl: "../views/mapamundi.html",
+            controller: "MapamundiController as mapamundiCtrl"
         })
 });

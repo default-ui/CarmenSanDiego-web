@@ -1,4 +1,4 @@
-package server
+package main.java.server
 
 import org.uqbar.xtrest.json.JSONUtils
 import com.fasterxml.jackson.databind.ObjectMapper
