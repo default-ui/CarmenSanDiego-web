@@ -1,27 +1,27 @@
-package server
+package main.java.server
 
-import carmenSanDiego.Juego
-import carmenSanDiego.Pais
-import carmenSanDiego.Villano
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
-import miniModel.DataPais
-import miniModel.EmitirOrdenRequest
-import miniModel.EstadoJuego
-import miniModel.MiniExpediente
-import miniModel.MiniMapamundi
-import miniModel.MiniPais
-import miniModel.MiniVillano
-import miniModel.ViajarRequest
-import org.uqbar.commons.model.UserException
-import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
-import org.uqbar.xtrest.api.annotation.Delete
-import org.uqbar.xtrest.api.annotation.Get
-import org.uqbar.xtrest.api.annotation.Post
-import org.uqbar.xtrest.api.annotation.Put
-import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.json.JSONUtils
 import utils.CarmenSanDiegoRepoWeb
+import org.uqbar.xtrest.api.annotation.Post
+import org.uqbar.xtrest.http.ContentType
+import carmenSanDiego.Juego
+import miniModel.EstadoJuego
+import org.uqbar.xtrest.api.annotation.Get
+import org.uqbar.xtrest.api.annotation.Body
+import miniModel.EmitirOrdenRequest
+import org.uqbar.commons.model.UserException
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+import miniModel.MiniMapamundi
+import org.uqbar.xtrest.api.annotation.Put
+import miniModel.DataPais
+import carmenSanDiego.Pais
+import org.uqbar.xtrest.api.annotation.Delete
+import miniModel.MiniPais
+import miniModel.ViajarRequest
+import miniModel.MiniExpediente
+import miniModel.MiniVillano
+import carmenSanDiego.Villano
 
 @Controller
 class IniciarJuegoRestAPI {
