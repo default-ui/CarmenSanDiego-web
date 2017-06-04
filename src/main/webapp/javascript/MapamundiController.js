@@ -1,4 +1,4 @@
-app.controller('MapamundiCtrl', function($resource, Paises) {
+app.controller('MapamundiController', function($resource, Paises) {
     'use strict';
 
     var self = this;
@@ -40,7 +40,7 @@ app.controller('MapamundiCtrl', function($resource, Paises) {
 
 // ELIMINAR PAIS
     this.eliminarPais = function(pais) {
-    	console.log(pais)
+    	console.log(pais);
         var mensaje = "¿Está seguro de eliminar: '" + pais.nombre + "'?";
         bootbox.confirm(mensaje, function(confirma) {
             if (confirma) {
@@ -59,10 +59,10 @@ app.controller('MapamundiCtrl', function($resource, Paises) {
 
 // AGREGAR CARACTERISTICA
     this.agregarCaracteristica = function(){
-    	console.log(self.caracteristicaAIngresar)
+    	console.log(self.caracteristicaAIngresar);
         this.paisSeleccionado.caracteristicas.push(self.caracteristicaAIngresar);
         //$scope.newItem = null;
-      }
+      };
 
 // ELIMINAR CONEXION
     this.eliminarConexion = function(conexion) {
@@ -71,10 +71,10 @@ app.controller('MapamundiCtrl', function($resource, Paises) {
 
 // AGREGAR CONEXION
     this.agregarConexion = function(){
-    	console.log(self.conexionAIngresar)
+    	console.log(self.conexionAIngresar);
         this.paisSeleccionado.conexiones.push(self.conexionAIngresar);
         //$scope.newItem = null;
-      }
+      };
     
     this.agregarPais = function() {
         Paises.save(this.paisSeleccionado, function(data) {

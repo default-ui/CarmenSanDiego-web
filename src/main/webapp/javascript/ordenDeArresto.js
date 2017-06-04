@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('OrdenDeArrestoController', function() {
+app.controller('OrdenDeArrestoController', function($scope) {
 
     var self = this;
 
@@ -25,12 +25,6 @@ app.controller('OrdenDeArrestoController', function() {
         "nombre": "Moriarty"
     }];
 
-    this.seleccionado = "Carmen SanDiego";
-
-    this.villanoSeleccionado = function() {
-        this.seleccionado = $(".select-villano-js option:selected").text()
-    };
-
     this.agregarLibro = function() {
         Libros.save(this.nuevoLibro, function(data) {
             self.notificarMensaje('Libro agregado con id:' + data.id);
@@ -39,14 +33,17 @@ app.controller('OrdenDeArrestoController', function() {
         }, errorHandler);
     };
 
+    this.seleccionado = self.villanos[0];
+    this.ordenEmitida = null;
+
     this.emitirOrden = function() {
-        self.villanoSeleccionado();
-        $('.orden-emitida-js').text(this.seleccionado);
+        self.ordenEmitida = self.seleccionado;
     };
 
-    $(".btn-info").on("click", function () {
-        self.emitirOrden();
-    });
+    this.seleccionarVillano = function () {
+        self.seleccionado = $scope.selector;
+    };
+
 
     this.msgs = [];
     this.notificarMensaje = function(mensaje) {
