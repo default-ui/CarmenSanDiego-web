@@ -4,10 +4,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider
 
-        .state('ordenDeArresto', {
-            url: "/orden-de-arresto",
-            templateUrl: "../views/ordenDeArresto.html",
-            controller: "OrdenDeArrestoController as ordenCtrl"
+
+        .state('resolverMisterio', {
+            url: "/resolverMisterio",
+            templateUrl: "../views/resolverMisterio.html",
+            controller: "ResolverMisterioController as ResolverMisterioController"
         })
 
         .state('expediente', {

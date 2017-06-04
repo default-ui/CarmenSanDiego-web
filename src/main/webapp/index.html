@@ -27,12 +27,18 @@
 <body>
 
 <div class="container">
-    <div class="page-header">
-        <h1>
-            Carmen SanDiego
-            <small>AngularJS</small>
-        </h1>
-    </div>
+	<nav class="navbar navbar-inverse bg-inverse">
+	    <div class="container-fluid">
+	      <div class="navbar-header">
+	        <a ng-click="selected = 'rm'" href="#" class="navbar-brand">Carmen Sandiego AngularJS</a>
+	      </div>
+	      <ul ng-init="selected ='rm'" id="ul-nav" class="nav navbar-nav">
+	        <li ng-class="{'active':selected == 'rm'}" ng-click="selected = 'rm'"><a href="#!/resolverMisterio">Resolver Misterio</a></li> 
+	        <li ng-class="{'active':selected == 'mapamundi'}" ng-click="selected = 'mapamundi'"><a href="#!/mapamundi">Mapamundi</a></li>
+	        <li ng-class="{'active':selected == 'expediente'}" ng-click="selected = 'expediente'"><a href="#!/expediente">Expediente</a></li>
+	      </ul>
+	    </div>
+  	</nav>
 
     <div class="well-lg">
         <div ui-view></div>
