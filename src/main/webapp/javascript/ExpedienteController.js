@@ -1,4 +1,4 @@
-appExp.controller('ExpedienteController', function($resource, Villanos) {
+app.controller('ExpedienteController', function($resource, Villanos) {
     'use strict';
 
     var self = this;

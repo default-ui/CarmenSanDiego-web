@@ -8,12 +8,13 @@
     <div class="col-md-4 well" style="margin-left: 16px">
         <div class="col-md-12">
             <label>Pedir orden contra:</label>
-            <select class="form-control select-villano-js" >
-                <option data-ng-repeat="villano in ordenCtrl.villanos" value={{villano.villanoId}}>{{villano.nombre}}</option>
+            <select class="form-control select-villano-js" ng-model="selector"
+                    ng-change="ordenCtrl.seleccionarVillano(this)"
+                    ng-options="villano.villanoId as villano.nombre for villano in ordenCtrl.villanos track by villano.villanoId">
             </select>
         </div>
         <div class="col-md-12">
-            <input type="button" ng-click="ordenCtrl.emitirOrden()"
+            <input type="button" data-ng-click="ordenCtrl.emitirOrden()"
                    class="btn-info form-control"
                    value="Pedir orden" style="margin-top: 8px">
         </div>

@@ -1,1 +1,0 @@
-var appExp = angular.module('appExpediente', ['ngResource']);
