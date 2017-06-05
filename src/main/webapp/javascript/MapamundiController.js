@@ -99,10 +99,6 @@ app.controller('MapamundiController', function($resource, Paises) {
         this.paisSeleccionado.lugares.push(self.lugarAIngresar.nombre);
         //$scope.newItem = null;
       };
-      
-
-
-  
     
     this.agregarPais = function() {
         Paises.save(this.paisSeleccionado, function(data) {
@@ -130,7 +126,4 @@ app.controller('MapamundiController', function($resource, Paises) {
             while (mensajes.length > 0) mensajes.pop();
         }, 3000);
     }
-    	
-    
-   
   });

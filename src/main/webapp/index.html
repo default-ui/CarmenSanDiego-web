@@ -22,37 +22,64 @@
     <!-- UNDERSCORE -->
     <script src="node_modules/underscore/underscore-min.js"></script>
 
+    <!-- Estilo personalizado -->
+    <style type="text/css">
+
+        td {
+            vertical-align: middle !important;
+        }
+
+        /* tablas con scroll */
+        .table-fixed tbody {
+            max-height: 250px;
+            overflow: auto;
+        }
+
+        .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+            display: block;
+        }
+
+        .table-fixed tbody tr td {
+            float: left;
+        }
+
+        .table-fixed td:first-child {
+            width: 70%;
+        }
+        .table-fixed tbody tr td:last-child {
+            text-align: right;
+            white-space: nowrap;
+            width: 30%;
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-<div class="container">
-	<nav class="navbar navbar-inverse bg-inverse">
-	    <div class="container-fluid">
-	      <div class="navbar-header">
-	        <a ng-click="selected = 'rm'" href="#" class="navbar-brand">Carmen Sandiego AngularJS</a>
-	      </div>
-	      <ul ng-init="selected ='rm'" id="ul-nav" class="nav navbar-nav">
-	        <li ng-class="{'active':selected == 'rm'}" ng-click="selected = 'rm'"><a href="#!/resolverMisterio">Resolver Misterio</a></li> 
-	        <li ng-class="{'active':selected == 'mapamundi'}" ng-click="selected = 'mapamundi'"><a href="#!/mapamundi">Mapamundi</a></li>
-	        <li ng-class="{'active':selected == 'expediente'}" ng-click="selected = 'expediente'"><a href="#!/expediente">Expediente</a></li>
-	      </ul>
-	    </div>
-  	</nav>
 
-    <div class="well-lg">
-        <div ui-view></div>
-    </div>
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a ng-click="selected = 'rm'" href="#" class="navbar-brand">Carmen Sandiego AngularJS</a>
+          </div>
+          <ul ng-init="selected ='rm'" id="ul-nav" class="nav navbar-nav">
+            <li ng-class="{'active':selected == 'rm'}" ng-click="selected = 'rm'"><a href="#!/resolverMisterio">Resolver Misterio</a></li>
+            <li ng-class="{'active':selected == 'mapamundi'}" ng-click="selected = 'mapamundi'"><a href="#!/mapamundi">Mapamundi</a></li>
+            <li ng-class="{'active':selected == 'expediente'}" ng-click="selected = 'expediente'"><a href="#!/expediente">Expediente</a></li>
+          </ul>
+        </div>
+    </nav>
 
-</div>
 
-<!-- nuestra aplicacion js -->
-<script src="javascript/app.js"></script>
-<script src="javascript/ordenDeArresto.js"></script>
-<script src="javascript/ExpedienteController.js"></script>
-<script src="javascript/MapamundiController.js"></script>
-<script src="javascript/services.js"></script>
-<script src="javascript/routes.js"></script>
-
+    <div class="container" ui-view></div>
+    <!-- nuestra aplicacion js -->
+    <script src="javascript/app.js"></script>
+    <script src="javascript/ExpedienteController.js"></script>
+    <script src="javascript/MapamundiController.js"></script>
+    <script src="javascript/ResolverMisterioController.js"></script>
+    <script src="javascript/services.js"></script>
+    <script src="javascript/routes.js"></script>
 </body>
 </html>

@@ -1,143 +1,190 @@
-<div>
-    <h1>{{ title }}</h1><br>
+<div class="page-header">
+    <h1>
+        Resolver Misterio: {{ resolverMisterioCtrl.titulo }}
+    </h1>
+</div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <!-- Panel de viajar -->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Viajar a: {{  }}</h4>
-                </div>
-                <div class="panel-body">
-                    <a ng-click="viajar()" class="btn btn-default">Viajar</a>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="well well-lg">
+            <p>Ubicación</p>
         </div>
 
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h2 style="font-style: italic">Estas en: {{ caso.pais.nombre }} </h2>
-                </div>
-            </div>
-        </div>
     </div>
+</div>
 
-    <div class="row"> 
-        <div class="col-md-6">
-            <!--Tabla de paises posibles para viajar--> 
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th class="text-center">Posibilidades</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="conexion in caso.pais.conexiones">
-                    <td class="text-center">
-                        <input name="checkboxPais" type="radio" ng-model="resolverMisterioCtrl.paisSeleccionado" ng-value="conexion" id="{{conexion.id}}"/> 
-                    </td>
-                    <td> <label for="{{conexion.id}}">{{conexion.nombre}}</label> </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="row">
+    <div class="col-md-4">
 
-        <!-- Lista de lugares -->
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Investigar</h4>
-                </div>
-                <div class="panel-body">
-                    <div ng-repeat="lugar in caso.pais.lugares">
-                        <a ng-click="getPista(lugar)" class="btn btn-default btn-block"> {{ lugar }}</a><br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                Viajar
+            </h3>
+            </div>
+            <div class="panel-body">
+
+                <p>Lorem ipsum dolor est laborum.</p>
+
+                <form>
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> Dolore eu fugiat nulla pariatur.
+                        </label>
                     </div>
-                </div>
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Consectetur adipisicing elit, sed do pariatur.
+                        </label>
+                    </div>
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Excepteur sint occaecat cupidatat non proident.
+                        </label>
+                    </div>
+
+                </form>
+
+                <button type="button" class="btn btn-success btn-block">
+                    Viajar
+                </button>
+
+
             </div>
         </div>
-    </div>
-    
-    <div class="row">
-        <!--Paises visitados y fallidos-->
-        <div ng-if="caso.paisesVisitados.length > 0" class="col-md-3"> 
-            <table class="table table-bordered table-hover">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                Destinos Fallidos
+            </h3>
+            </div>
+
+            <table class="table">
                 <thead>
-                <tr>
-                    <th class="text-center">Paises Visitados</th>
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="paisVisitado in caso.paisesVisitados">
-                    <td> {{ paisVisitado }} </td>
-                </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                    </tr>
                 </tbody>
             </table>
+
         </div>
 
-        <div class="col-md-3">
-            <table ng-if="caso.paisesFallidos.length > 0" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th class="text-center">Paises Fallidos</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="paisFallido in caso.paisesFallidos">
-                    <td> {{ paisFallido }} </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
+
     </div>
+    <div class="col-md-4">
 
-    <div class="row">
-        <div class="col-md-6">
-        <!-- Panel de Orden de arresto -->
-            <h1>Orden de arresto:</h1>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Investigar
+            </h3>
+            </div>
+            <div class="panel-body">
+                Lorem ipsum dolor sit amet, laborum.
+            </div>
+            <!-- List group -->
+            <div class="list-group">
+
+                <a href="#" class="list-group-item">
+                    <div class="media-left">
+                        <img class="media-object" src="..." alt="...">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Embajada</h4>
+                    </div>
+                </a>
+
+                <a href="#" class="list-group-item">
+                    <div class="media-left">
+                        <img class="media-object" src="..." alt="...">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Club</h4>
+                    </div>
+                </a>
+
+                <a href="#" class="list-group-item">
+                    <div class="media-left">
+                        <img class="media-object" src="..." alt="...">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Biblioteca</h4>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-4">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                Visitando
+            </h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    Panel content
+                </p>
+
+                <button type="button" class="btn btn-default btn-block">Block level button</button>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                Orden de Arresto
+            </h3>
+        </div>
+        <div class="panel-body">
+
             <div>
                 <label>Emitida contra:</label>
-                <span class="orden-emitida-js">{{ordenCtrl.ordenEmitida}}</span>
+                <span class="orden-emitida-js">{{resolverMisterioCtrl.ordenEmitida}}</span>
             </div>
-            <div class="col-md-4 well" style="margin-left: 16px">
-                <div class="col-md-12">
-                    <label>Pedir orden contra:</label>
-                    <select class="form-control select-villano-js" ng-model="selector"
-                            ng-change="ordenCtrl.seleccionarVillano(this)"
-                            ng-options="villano.villanoId as villano.nombre for villano in ordenCtrl.villanos track by villano.villanoId">
-                    </select>
-                </div>
-                <div class="col-md-12">
-                    <input type="button" data-ng-click="ordenCtrl.emitirOrden()"
-                           class="btn-info form-control"
-                           value="Pedir orden" style="margin-top: 8px">
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal Investigar -->
-    <div id="modalLugar" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h2 class="modal-title">Visitando: {{ lugarSeleccionado }}</h2>
-        </div>
-        <div class="modal-body">
-            <ul>
-                <h3>Pistas obtenidas del lugar: </h3><br>
-                <li ng-repeat="pista in pistas"> <h4>{{ pista }}</h4> </li>
-            </ul>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        </div>
-        </div>
+            <label for="orden">Emitir Orden de arresto contra:</label>
+            <select class="form-control select-villano-js" name="orden" 
+            ng-model="selector" ng-change="resolverMisterioCtrl.seleccionarVillano(this)"
+            ng-options="villano.villanoId as villano.nombre for villano in resolverMisterioCtrl.villanos track by villano.villanoId">
+        </select>
+        <input type="button" data-ng-click="resolverMisterioCtrl.emitirOrden()"
+        class="btn-info form-control"
+        value="Pedir orden" style="margin-top: 8px">
 
     </div>
-    </div>
+</div>
 
+    </div>
 </div>

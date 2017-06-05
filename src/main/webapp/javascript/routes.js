@@ -8,7 +8,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('resolverMisterio', {
             url: "/resolverMisterio",
             templateUrl: "../views/resolverMisterio.html",
-            controller: "ResolverMisterioController as ResolverMisterioController"
+            controller: "ResolverMisterioController as resolverMisterioCtrl"
         })
 
         .state('expediente', {
