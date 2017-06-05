@@ -1,6 +1,6 @@
-app.factory('OrdenDeArresto', function($resource) {
+app.factory('ResolverMisterio', function($resource) {
     return $resource('/emitirOrdenPara', {
-        'save': { method: 'POST' }
+        'emitirOrden': { method: 'POST' }
     });
 });
 

@@ -1,6 +1,6 @@
 <div class="page-header">
     <h1>
-        Resolver Misterio: {{ ResolverMisterioController.titulo }}
+        Resolver Misterio: {{ resolverMisterioCtrl.titulo }}
     </h1>
 </div>
 
@@ -161,24 +161,30 @@
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
+          <div class="panel-heading">
+            <h3 class="panel-title">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 Orden de Arresto
             </h3>
-            </div>
-            <div class="panel-body">
-
-                <label for="orden">Emitir Orden de arresto contra:</label>
-
-                <select
-                    class="form-control"
-                    ng-model="ResolverMisterioController.villanoId"
-                    ng-options="villano.villanoId as villano.nombre for villano in ResolverMisterioController.villanos">
-                </select>
-
-            </div>
         </div>
+        <div class="panel-body">
+
+            <div>
+                <label>Emitida contra:</label>
+                <span class="orden-emitida-js">{{resolverMisterioCtrl.ordenEmitida}}</span>
+            </div>
+
+            <label for="orden">Emitir Orden de arresto contra:</label>
+            <select class="form-control select-villano-js" name="orden" 
+            ng-model="selector" ng-change="resolverMisterioCtrl.seleccionarVillano(this)"
+            ng-options="villano.villanoId as villano.nombre for villano in resolverMisterioCtrl.villanos track by villano.villanoId">
+        </select>
+        <input type="button" data-ng-click="resolverMisterioCtrl.emitirOrden()"
+        class="btn-info form-control"
+        value="Pedir orden" style="margin-top: 8px">
+
+    </div>
+</div>
 
     </div>
 </div>

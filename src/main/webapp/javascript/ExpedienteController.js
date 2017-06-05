@@ -62,9 +62,6 @@ app.controller('ExpedienteController', function($resource, Villanos) {
     	console.log(self.nuevoHobbie);
     	self.actualizarLista();
     };
-    
-
-
 
 });
     	

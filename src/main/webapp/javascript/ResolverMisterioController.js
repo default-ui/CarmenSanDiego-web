@@ -1,19 +1,12 @@
-'use strict';
-
-app.controller('OrdenDeArrestoController', function($scope) {
+app.controller("ResolverMisterioController", function($resource, Villanos) {
+    'use strict';
 
     var self = this;
 
     function errorHandler(error) {
         self.notificarError(error.data);
     }
-
-    this.obtenerVillanos = function() {
-        Libros.query(function(data) {
-            self.villanos = data;
-        }, errorHandler);
-    };
-
+    /*
     this.villanos = [{
         "villanoId": "0",
         "nombre": "Carmen SanDiego"
@@ -24,16 +17,20 @@ app.controller('OrdenDeArrestoController', function($scope) {
         "villanoId": "2",
         "nombre": "Moriarty"
     }];
+*/
 
-    this.agregarLibro = function() {
-        Libros.save(this.nuevoLibro, function(data) {
-            self.notificarMensaje('Libro agregado con id:' + data.id);
-            self.actualizarLista();
-            self.nuevoLibro = null;
+    self.villanos = [];
+
+    this.obtenerVillanos = function() {
+        Villanos.query(function(data) {
+            self.villanos = data;
         }, errorHandler);
-    };
+    }();
 
-    this.seleccionado = self.villanos[0];
+    this.titulo = 'Lalala';
+    this.villanoId = null //self.villanos[0].villanoId;
+
+    this.seleccionado = null //self.villanos[0];
     this.ordenEmitida = null;
 
     this.emitirOrden = function() {
@@ -43,7 +40,15 @@ app.controller('OrdenDeArrestoController', function($scope) {
     this.seleccionarVillano = function () {
         self.seleccionado = $scope.selector;
     };
+    // this.ordenEmitida = null;
 
+    // this.emitirOrden = function() {
+    //     self.ordenEmitida = self.seleccionado.nombre;
+    // };
+
+    // this.seleccionarVillano = function () {
+    //     self.seleccionado = $scope.selector;
+    // };
 
     this.msgs = [];
     this.notificarMensaje = function(mensaje) {
@@ -62,4 +67,5 @@ app.controller('OrdenDeArrestoController', function($scope) {
             while (mensajes.length > 0) mensajes.pop();
         }, 3000);
     }
+
 });
