@@ -1,4 +1,4 @@
-package main.java.server
+package server
 
 import carmenSanDiego.Juego
 import utils.DummyData
