@@ -1,131 +1,177 @@
-<div class="page-header" style="">
+<div class="page-header">
     <h1>
         Mapamundi
     </h1>
 </div>
 
-<div class="well-lg">
-    <div class="col-sm-4">
-        <div class="" style="height: 500px;overflow: auto" >
-            <table class="table table-bordered table-hover example-animate-container">
-                <tr class="table-info">
-                    <th>País</th>
-                </tr>
-                <tr data-ng-repeat="pais in mapamundiCtrl.paises">
-                    <td>{{pais.nombre}}</td>
-                    <td nowrap class="col-xs-2">
-                        <button type="button" class="btn btn-primary" data-ng-click="mapamundiCtrl.editarPais(pais.id)" aria-label="Editar">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger" data-ng-click="mapamundiCtrl.eliminarPais(pais);" aria-label="Eliminar">
-                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                        </button>
-                    </td>
-                </tr>
+<div class="row">
+
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                    Paises
+                </h3>
+            </div>
+
+            <table class="table table-hover table-fixed">
+                <tbody>
+                    <tr data-ng-repeat="pais in mapamundiCtrl.paises">
+
+                        <td>{{pais.nombre}}</td>
+
+                        <td>
+
+                            <button type="button" class="btn btn-primary btn-sm" data-ng-click="mapamundiCtrl.editarPais(pais.id)" aria-label="Editar">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </button>
+
+                            <button type="button" class="btn btn-danger btn-sm" data-ng-click="mapamundiCtrl.eliminarPais(pais);" aria-label="Eliminar">
+                                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
             </table>
+
+            <div class="panel-footer">
+
+                <button type="button" class="btn btn-success btn-block" data-ng-click="mapamundiCtrl.limpiarCampos()">
+                    Nuevo País
+                </button>
+
+            </div>
+
         </div>
-        <br>
-        <button type="submit" class="btn btn-primary" data-ng-click="mapamundiCtrl.limpiarCampos()">Nuevo</button>
     </div>
-    <div class="col-sm-1">
-    </div>
-    <div class="col-lg-6 well well-lg">
-        <div>
-            <form name="paisForm" role="form">
-                <fieldset>
+
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                    Paises
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <form name="paisForm" role="form">
+
+                    <!-- Nombre -->
                     <div class="form-group">
                         <label for="titulo">Nombre</label>
-                        <h2 class="hola"></h2>
                         <input data-ng-model="mapamundiCtrl.paisSeleccionado.nombre" type="text" id="nombre" class="form-control" placeholder="">
-                        <hr style="height:1px;border:none;color:#0fb;background-color:#0fb;" />
                     </div>
+
+                    <!-- Características -->
                     <div class="form-group">
-                        <table class="table table-bordered table-hover example-animate-container">
-                            <tr class="table-info">
-                                <th>Características</th>
-                            </tr>
-                            <tr data-ng-repeat="caracteristica in mapamundiCtrl.paisSeleccionado.caracteristicas">
-                                <td>{{caracteristica}}</td>
-                                <td nowrap class="col-xs-2">
-                                    <button type="button" class="btn btn-danger" data-ng-click="mapamundiCtrl.eliminarCaracteristica(caracteristica);" aria-label="Eliminar">
-                                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr >
-                                <td>
-                                    <input data-ng-model="mapamundiCtrl.caracteristicaAIngresar" type="text" id="disabledTextInput" class="form-control" placeholder="">
-                                </td>
-                                <td nowrap class="col-xs-1">
-                                    <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarCaracteristica();" aria-label="Agregar">
-                                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                        <hr style="height:1px;border:none;color:#0fb;background-color:#0fb;" />
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p class="panel-title">Características</p>
+                            </div>
+
+                            <table class="table table-hover table-fixed">
+                                <tbody>
+                                    <tr data-ng-repeat="caracteristica in mapamundiCtrl.paisSeleccionado.caracteristicas">
+                                        <td>{{caracteristica}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-remove-sign" data-ng-click="mapamundiCtrl.eliminarCaracteristica(caracteristica);" aria-label="Eliminar"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer">
+
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" placeholder="Nueva Característica..." data-ng-model="mapamundiCtrl.caracteristicaAIngresar">
+
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success glyphicon glyphicon-plus-sign" type="button" data-ng-click="mapamundiCtrl.agregarCaracteristica();" aria-label="Agregar"></button>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
+
+                    <!-- Conexiones -->
                     <div class="form-group">
-                        <table class="table table-bordered table-hover example-animate-container">
-                            <tr class="table-info">
-                                <th>Conexiones</th>
-                            </tr>
-                            <tr data-ng-repeat="conexion in mapamundiCtrl.paisSeleccionado.conexiones">
-                                <td>{{conexion.nombre}}</td>
-                                <td nowrap class="col-xs-2">
-                                    <button type="button" class="btn btn-danger" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);" aria-label="Eliminar">
-                                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr>
-                                <td>
-                                    <select ng-model='mapamundiCtrl.conexionAIngresar'  ng-options='conexion.nombre for conexion in mapamundiCtrl.paises'></select>
-                                </td>
-                                <td nowrap class="col-xs-1">
-                                    <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar">
-                                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                        <hr style="height:1px;border:none;color:#0fe;background-color:#0fe;" />
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p class="panel-title">Conexiones</p>
+                            </div>
+
+                            <table class="table table-hover table-fixed">
+                                <tbody>
+                                    <tr data-ng-repeat="conexion in mapamundiCtrl.paisSeleccionado.conexiones">
+                                        <td>{{conexion.nombre}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer ">
+
+                                <div class="input-group">
+                                    <select class="form-control" ng-model='mapamundiCtrl.conexionAIngresar'  ng-options='conexion.nombre for conexion in mapamundiCtrl.paises'></select>
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-success glyphicon glyphicon-plus-sign" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar"></button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
+
+                    <!-- Lugares SIN TERMINAR-->
                     <div class="form-group">
-                        <table class="table table-bordered table-hover example-animate-container">
-                            <tr class="table-info">
-                                <th>Lugares</th>
-                            </tr>
-                            <tr data-ng-repeat="lugar in mapamundiCtrl.paisSeleccionado.lugares">
-                                <td>{{lugar}}</td>
-                                <td nowrap class="col-xs-2">
-                                    <button type="button" class="btn btn-danger" data-ng-click="mapamundiCtrl.eliminarCaracteristica(caracteristica);" aria-label="Eliminar">
-                                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr>
-                                <td>
-                                    <input data-ng-model="mapamundiCtrl.caracteristicaAIngresar" type="text" id="disabledTextInput" class="form-control" placeholder="">
-                                </td>
-                                <td nowrap class="col-xs-1">
-                                    <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarCaracteristica();" aria-label="Agregar">
-                                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                        <hr style="height:1px;border:none;color:#0ff;background-color:#0ff;" />
-                        <button type="Submit" class="btn btn-success pull-right" data-ng-click="mapamundiCtrl.agregarPais()">Aceptar</button>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p class="panel-title">Lugares</p>
+                            </div>
+
+                            <table class="table table-hover table-fixed">
+                                <tbody>
+                                    <tr data-ng-repeat="lugar in mapamundiCtrl.paisSeleccionado.lugares">
+                                        <td>{{lugar}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer ">
+
+                                <div class="input-group">
+                                    <select class="form-control" ng-model='mapamundiCtrl.conexionAIngresar'  ng-options='conexion.nombre for conexion in mapamundiCtrl.paises'></select>
+                                    <div class="input-group-btn ">
+                                        <button type="button" class="btn btn-success glyphicon glyphicon-plus-sign" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar"></button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
-                </fieldset>
-            </form>
+
+                </form>
+
+            </div>
         </div>
     </div>
+
 </div>

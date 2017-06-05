@@ -1,5 +1,5 @@
 app.controller("ResolverMisterioController", function($scope, $http) {
- 
+
     var self = this;
 
     this.villanos = [{
@@ -13,16 +13,16 @@ app.controller("ResolverMisterioController", function($scope, $http) {
         "nombre": "Moriarty"
     }];
 
-    this.seleccionado = self.villanos[0];
-    this.ordenEmitida = null;
+    this.titulo = 'Lalala';
+    this.villanoId = this.villanos[0].villanoId;
+    // this.ordenEmitida = null;
 
-    this.emitirOrden = function() {
-        self.ordenEmitida = self.seleccionado.nombre;
-    };
+    // this.emitirOrden = function() {
+    //     self.ordenEmitida = self.seleccionado.nombre;
+    // };
 
-    this.seleccionarVillano = function () {
-        self.seleccionado = $scope.selector;
-    };
+    // this.seleccionarVillano = function () {
+    //     self.seleccionado = $scope.selector;
+    // };
 
-    var self = this;
 });
