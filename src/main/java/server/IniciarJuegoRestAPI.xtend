@@ -1,4 +1,4 @@
-package main.java.server
+package server
 
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.json.JSONUtils
@@ -26,7 +26,7 @@ import carmenSanDiego.Villano
 @Controller
 class IniciarJuegoRestAPI {
 	
-    extension JSONUtils = new CarmenSonUtils
+    extension JSONUtils = new server.CarmenSonUtils
     
 	CarmenSanDiegoRepoWeb repo
     
@@ -149,7 +149,12 @@ class IniciarJuegoRestAPI {
 		
 	}
     
+ 	@Get("/lugares")
+    def getLugares() {
+    	response.contentType = ContentType.APPLICATION_JSON
+    	ok(this.repo.lugares.toJson)
 
+    }
    /*
      * Request con la forma http://localhost:3000/viajar + un body
      * Viaja a un pais conectado al actual

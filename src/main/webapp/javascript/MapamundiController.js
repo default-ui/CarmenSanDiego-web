@@ -3,13 +3,18 @@ app.controller('MapamundiController', function($resource, Paises) {
 
     var self = this;
     self.paises = [];
+    self.lugares = [];
     self.paisSeleccionado = null;
     self.caracteristicaAIngresar = null;
     self.conexionAIngresar = null;
+    self.lugarAIngresar = null;
     
     this.actualizarLista = function() {
         Paises.query(function(data) {
             self.paises = data;
+        });
+        Paises.getL(function(data) {
+        	self.lugares = data;
         });
     };
     
@@ -25,6 +30,15 @@ app.controller('MapamundiController', function($resource, Paises) {
     	
             });
     	}
+    };
+
+//AGREGAR PAIS    
+    this.agregarPais = function() {
+        Paises.update(this.paisSeleccionado, function(data) {
+            //self.notificarMensaje('Libro agregado con id:' + data.id);
+            self.actualizarLista();
+            //self.nuevoPais = null;
+        });
     };
     
     this.limpiarCampos = function(){
@@ -52,7 +66,7 @@ app.controller('MapamundiController', function($resource, Paises) {
         });
     };
     
- // ELIMINAR CARACTERISTICA
+// ELIMINAR CARACTERISTICA
     this.eliminarCaracteristica = function(caracteristica) {
     	this.paisSeleccionado.caracteristicas.splice(this.paisSeleccionado.caracteristicas.indexOf(caracteristica),1);
     };
@@ -71,10 +85,24 @@ app.controller('MapamundiController', function($resource, Paises) {
 
 // AGREGAR CONEXION
     this.agregarConexion = function(){
-    	console.log(self.conexionAIngresar);
         this.paisSeleccionado.conexiones.push(self.conexionAIngresar);
         //$scope.newItem = null;
       };
+   
+// ELIMINAR LUGAR
+    this.eliminarLugar = function(lugar) {
+      	this.paisSeleccionado.lugares.splice(this.paisSeleccionado.lugares.indexOf(lugar),1);
+      };
+      
+// AGREGAR LUGAR
+    this.agregarLugar = function(){
+        this.paisSeleccionado.lugares.push(self.lugarAIngresar.nombre);
+        //$scope.newItem = null;
+      };
+      
+
+
+  
     
     this.agregarPais = function() {
         Paises.save(this.paisSeleccionado, function(data) {

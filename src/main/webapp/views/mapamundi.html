@@ -103,7 +103,7 @@
                             <tr data-ng-repeat="lugar in mapamundiCtrl.paisSeleccionado.lugares">
                                 <td>{{lugar}}</td>
                                 <td nowrap class="col-xs-2">
-                                    <button type="button" class="btn btn-danger" data-ng-click="mapamundiCtrl.eliminarCaracteristica(caracteristica);" aria-label="Eliminar">
+                                    <button type="button" class="btn btn-danger" data-ng-click="mapamundiCtrl.eliminarLugar(lugar);" aria-label="Eliminar">
                                         <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                                     </button>
                                 </td>
@@ -112,10 +112,10 @@
                         <table>
                             <tr>
                                 <td>
-                                    <input data-ng-model="mapamundiCtrl.caracteristicaAIngresar" type="text" id="disabledTextInput" class="form-control" placeholder="">
+                                    <select ng-model='mapamundiCtrl.lugarAIngresar'  ng-options='lugar.nombre for lugar in mapamundiCtrl.lugares'></select>
                                 </td>
                                 <td nowrap class="col-xs-1">
-                                    <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarCaracteristica();" aria-label="Agregar">
+                                    <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarLugar();" aria-label="Agregar">
                                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                                     </button>
                                 </td>
