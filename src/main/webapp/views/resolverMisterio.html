@@ -8,7 +8,7 @@
     <div class="col-md-12">
 
         <div class="well well-lg">
-            <p>Ubicación</p>
+            <p>Ubicación actual: {{ resolverMisterioCtrl.paisActual.nombre}}</p>
         </div>
 
     </div>
@@ -20,37 +20,22 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
-                Viajar
-            </h3>
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                    Viajar
+                </h3>
             </div>
             <div class="panel-body">
-
-                <p>Lorem ipsum dolor est laborum.</p>
-
+                <p>Elija un pais para viajar: </p>
                 <form>
-
-                    <div class="radio">
+                    <div class="radio" ng-repeat="pais in resolverMisterioCtrl.paisActual.conexiones">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> Dolore eu fugiat nulla pariatur.
+                            <input type="radio" name=pais.nombre id=pais.id value="pais.id"
+                                ng-model="some.path" ng-change="resolverMisterioCtrl.seleccionarPaisAViajar(this)" checked> {{pais.nombre}}
                         </label>
                     </div>
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Consectetur adipisicing elit, sed do pariatur.
-                        </label>
-                    </div>
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Excepteur sint occaecat cupidatat non proident.
-                        </label>
-                    </div>
-
                 </form>
 
-                <button type="button" class="btn btn-success btn-block">
+                <button type="button" class="btn btn-success btn-block" data-ng-click="resolverMisterioCtrl.viajar()">
                     Viajar
                 </button>
 
@@ -61,9 +46,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                Destinos Fallidos
-            </h3>
+                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                    Destinos Fallidos
+                </h3>
             </div>
 
             <table class="table">
@@ -99,9 +84,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                Investigar
-            </h3>
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    Investigar
+                </h3>
             </div>
             <div class="panel-body">
                 Lorem ipsum dolor sit amet, laborum.
@@ -146,9 +131,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                Visitando
-            </h3>
+                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                    Visitando
+                </h3>
             </div>
             <div class="panel-body">
                 <p>
@@ -176,8 +161,8 @@
 
             <label for="orden">Emitir Orden de arresto contra:</label>
             <select class="form-control select-villano-js" name="orden" 
-            ng-model="selector" ng-change="resolverMisterioCtrl.seleccionarVillano(this)"
-            ng-options="villano.villanoId as villano.nombre for villano in resolverMisterioCtrl.villanos track by villano.villanoId">
+            ng-model="ordenSelector" ng-change="resolverMisterioCtrl.seleccionarVillano()"
+            ng-options="villano.id as villano.nombre for villano in resolverMisterioCtrl.villanos track by villano.id">
         </select>
         <input type="button" data-ng-click="resolverMisterioCtrl.emitirOrden()"
         class="btn-info form-control"
@@ -186,5 +171,5 @@
     </div>
 </div>
 
-    </div>
+</div>
 </div>

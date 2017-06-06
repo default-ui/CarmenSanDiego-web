@@ -1,6 +1,11 @@
 app.factory('ResolverMisterio', function($resource) {
-    return $resource('/emitirOrdenPara', {
-        'emitirOrden': { method: 'POST' }
+    return $resource('/:dir/:id', {'id': '@id'}, {
+        'iniciarJuego': { method: 'POST', params: {dir: "iniciarJuego"}},
+        'viajar': { method: 'POST', params: {dir: "viajar"}},
+        'obtenerPais': { method: 'GET', params: {dir:"pais"}},
+        'emitirOrden': { method: 'POST', params: {dir:"emitirOrdenPara"}},
+        'obtenerVillano': { method: 'GET', params: {dir: "villano"}},
+        'obtenerVillanos': { method: 'GET', params: {dir:"villanos"}, isArray: true}
     });
 });
 

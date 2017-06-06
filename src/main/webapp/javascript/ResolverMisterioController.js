@@ -1,11 +1,11 @@
-app.controller("ResolverMisterioController", function($resource, Villanos) {
+app.controller("ResolverMisterioController", function($scope, $resource, ResolverMisterio) {
     'use strict';
 
     var self = this;
 
     function errorHandler(error) {
         self.notificarError(error.data);
-    }
+    };
     /*
     this.villanos = [{
         "villanoId": "0",
@@ -18,27 +18,65 @@ app.controller("ResolverMisterioController", function($resource, Villanos) {
         "nombre": "Moriarty"
     }];
 */
-
+    self.juego = null;
     self.villanos = [];
+    self.paisActual = null;
+    self.paisAViajar = null;
+
+    this.actualizarPais = function(id) {
+        ResolverMisterio.obtenerPais({id: id}, function(data) {
+            self.paisActual = data;
+        }, errorHandler);
+    };
+
+    this.obtenerPaisAViajar = function(id) {
+        ResolverMisterio.obtenerPais({id: id}, function(data) {
+            self.paisAViajar = data;
+        }, errorHandler);
+    };
+
+    this.iniciarJuego = function() {
+        ResolverMisterio.iniciarJuego(function(data) {
+            self.juego = data;
+            self.actualizarPais(data.pais.id);
+        }, errorHandler);
+    }();
+
+    this.seleccionarPaisAViajar = function(inputSeleccionado) {
+        self.obtenerPaisAViajar(inputSeleccionado.pais.id);
+    };
+
+    this.viajar = function() {
+        ResolverMisterio.viajar(self.paisAViajar, function(data) {
+
+        }, errorHandler);
+    };
 
     this.obtenerVillanos = function() {
-        Villanos.query(function(data) {
+        ResolverMisterio.obtenerVillanos( function(data) {
             self.villanos = data;
         }, errorHandler);
     }();
 
-    this.titulo = 'Lalala';
-    this.villanoId = null //self.villanos[0].villanoId;
-
-    this.seleccionado = null //self.villanos[0];
+    this.seleccionado = null; //self.villanos[0];
     this.ordenEmitida = null;
+    this.villanoParaEmitir = null;
 
-    this.emitirOrden = function() {
-        self.ordenEmitida = self.seleccionado;
+    this.obtenerVillano = function(id) {
+        ResolverMisterio.obtenerVillano({id: id}, function(data) {
+            self.villanoParaEmitir = data;
+        }, errorHandler);
     };
 
-    this.seleccionarVillano = function () {
-        self.seleccionado = $scope.selector;
+    this.emitirOrden = function(){
+        self.obtenerVillano(self.seleccionado);
+        ResolverMisterio.emitirOrden(self.villanoParaEmitir, function(data) {
+            self.ordenEmitida = self.villanoParaEmitir.nombre;
+        }, errorHandler);
+    };
+
+    this.seleccionarVillano = function() {
+        self.seleccionado = $scope.ordenSelector;
     };
     // this.ordenEmitida = null;
 
@@ -51,6 +89,7 @@ app.controller("ResolverMisterioController", function($resource, Villanos) {
     // };
 
     this.msgs = [];
+
     this.notificarMensaje = function(mensaje) {
         this.msgs.push(mensaje);
         this.notificar(this.msgs);
@@ -66,6 +105,6 @@ app.controller("ResolverMisterioController", function($resource, Villanos) {
         $timeout(function() {
             while (mensajes.length > 0) mensajes.pop();
         }, 3000);
-    }
+    };
 
 });
