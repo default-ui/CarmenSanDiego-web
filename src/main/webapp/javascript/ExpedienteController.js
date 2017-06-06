@@ -7,6 +7,7 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos) {
     self.nombreVillanoAEditar = " ";
     self.nuevoHobbie = " ";
     self.nuevaSena = " ";
+    self.mostrarElementos = true;
 
     // GET todos los villanos
     this.actualizarLista = function() {
@@ -16,36 +17,25 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos) {
         });
     };
     
+    
+    
     this.actualizarLista();
 
     // GET villano by ID
     this.verVillano = function(idVillano) {
     	if(!angular.isUndefined(idVillano)){ 
     	Villanos.get({id: idVillano}, function(data) {
-    	//	console.log(self.villanoActual);
-    	//	console.log(data);
     		self.villanoActual = data;
-    	//	console.log(self.villanoActual.id)
-    		//self.nuevoHobbie = "fgfdg";
-    //	console.log(self.villanoActual);
-    	
             });
     	}
-    	//console.log(self.villanoActual);
     };
     
     // DELETE villano by ID
     this.eliminarVillano = function(idVillano) {
-//        var mensaje = "¿Está seguro de eliminar: '" + libro.titulo + "'?";
-//        bootbox.confirm(mensaje, function(confirma) {
-//            if (confirma) {
                 Villanos.remove({id: idVillano}, function() {
-                  //  self.notificarMensaje('Libro eliminado!');
                 	self.villanoActual = null;
                     self.actualizarLista();
                 });
-         //   }
-    //    });
     };
     
     // Utilizado en el boton Nuevo
