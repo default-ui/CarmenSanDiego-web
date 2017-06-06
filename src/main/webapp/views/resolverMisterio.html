@@ -1,3 +1,11 @@
+<div class="alert alert-success" style="display: none; position: fixed; top: 50px; width: 100%; z-index: 1000">
+  <strong>Exito!</strong> You should.
+</div>
+
+<div class="alert alert-danger" style="display: none; position: fixed; top: 50px; width: 100%; z-index: 1000">
+  <strong>Error!</strong> You should.
+</div>
+
 <div class="page-header">
     <h1>
         Resolver Misterio: {{ resolverMisterioCtrl.titulo }}
@@ -58,18 +66,10 @@
                         <th>First Name</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody ng-repeat="pais in resolverMisterioCtrl.destinosFallidos">
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
+                        <th scope="row"> {{$index + 1}} </th>
+                        <td> {{pais.nombre}} </td>
                     </tr>
                 </tbody>
             </table>
@@ -89,38 +89,20 @@
                 </h3>
             </div>
             <div class="panel-body">
-                Lorem ipsum dolor sit amet, laborum.
+                Elija un lugar para investigar:
             </div>
             <!-- List group -->
             <div class="list-group">
 
-                <a href="#" class="list-group-item">
+                <a class="list-group-item" ng-repeat="lugar in resolverMisterioCtrl.paisActual.lugares" 
+                    data-ng-click="resolverMisterioCtrl.pedirPista(lugar)">
                     <div class="media-left">
                         <img class="media-object" src="..." alt="...">
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Embajada</h4>
+                        <h4 class="media-heading">{{lugar}}</h4>
                     </div>
                 </a>
-
-                <a href="#" class="list-group-item">
-                    <div class="media-left">
-                        <img class="media-object" src="..." alt="...">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Club</h4>
-                    </div>
-                </a>
-
-                <a href="#" class="list-group-item">
-                    <div class="media-left">
-                        <img class="media-object" src="..." alt="...">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Biblioteca</h4>
-                    </div>
-                </a>
-
             </div>
         </div>
 
@@ -137,7 +119,7 @@
             </div>
             <div class="panel-body">
                 <p>
-                    Panel content
+                    {{ResolverMisterioCtrl.pistaActual}}
                 </p>
 
                 <button type="button" class="btn btn-default btn-block">Block level button</button>

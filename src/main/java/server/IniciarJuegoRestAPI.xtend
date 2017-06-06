@@ -1,4 +1,4 @@
-package server
+package main.java.server
 
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.json.JSONUtils
