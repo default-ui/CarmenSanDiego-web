@@ -1,4 +1,4 @@
-app.controller('ExpedienteController', function($resource, $timeout, Villanos) {
+app.controller('ExpedienteController', function($resource, $timeout, Villanos, $location) {
     'use strict';
 
     var self = this;
@@ -7,7 +7,7 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos) {
     self.nombreVillanoAEditar = " ";
     self.nuevoHobbie = " ";
     self.nuevaSena = " ";
-    self.mostrarElementos = true;
+    self.mostrarElementos = $location.path() == "/expedienteEditable";
 
     // GET todos los villanos
     this.actualizarLista = function() {

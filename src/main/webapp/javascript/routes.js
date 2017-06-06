@@ -16,6 +16,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "../views/expediente.html",
             controller: "ExpedienteController as expedienteCtrl"
         })
+        
+         .state('expedienteEditable', {
+            url: "/expedienteEditable",
+            templateUrl: "../views/expediente.html",
+            controller: "ExpedienteController as expedienteCtrl"
+        })
 
         .state('mapamundi', {
             url: "/mapamundi",
