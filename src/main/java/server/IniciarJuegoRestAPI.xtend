@@ -105,7 +105,21 @@ class IniciarJuegoRestAPI {
    		response.contentType = ContentType.APPLICATION_JSON
     	ok(new MiniMapamundi(this.repo.mapa).getPaisById(Integer.valueOf(id)).toJson)
 
-    }    
+    }
+    
+    @Get("/conexiones/:id")	
+  	def getConexionesPosibles() {	
+   		response.contentType = ContentType.APPLICATION_JSON
+    	ok(new MiniMapamundi(this.repo.mapa).getConexionesPosibles(Integer.valueOf(id)).toJson)
+
+    }
+    
+    @Get("/lugares/:id")
+    def getLugares() {
+    	response.contentType = ContentType.APPLICATION_JSON
+    	ok(new MiniMapamundi(this.repo.mapa).getLugaresPosibles(Integer.valueOf(id)).toJson)
+
+    }  
     /*
 	 * Request tiene la forma http://localhost:3000/pais/1 + un body.
 	 * Edita un pais en cuestion.
@@ -149,12 +163,7 @@ class IniciarJuegoRestAPI {
 		
 	}
     
- 	@Get("/lugares")
-    def getLugares() {
-    	response.contentType = ContentType.APPLICATION_JSON
-    	ok(this.repo.lugares.toJson)
-
-    }
+ 	
    /*
      * Request con la forma http://localhost:3000/viajar + un body
      * Viaja a un pais conectado al actual

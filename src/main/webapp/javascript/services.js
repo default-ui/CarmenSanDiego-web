@@ -8,6 +8,7 @@ app.factory('Paises', function($resource) {
     return $resource('/:dir/:id', {'id': '@id'}, {
         'get': { method: 'GET', params: {dir:"pais"}},
         'getL': {method: 'GET', params: {dir:"lugares"}, isArray: true},
+        'getC': {method: 'GET', params: {dir:"conexiones"}, isArray: true},
         'query': { method: 'GET', params: {dir:"paises"}, isArray: true},
         'update': { method: 'PUT', params: {dir:"pais"}},
         'save': { method: 'POST', params: {dir:"pais"}},

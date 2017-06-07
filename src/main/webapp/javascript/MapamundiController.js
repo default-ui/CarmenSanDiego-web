@@ -3,33 +3,41 @@ app.controller('MapamundiController', function($resource, Paises) {
 
     var self = this;
     self.paises = [];
-    self.lugares = [];
+    self.lugares = null;
     self.paisSeleccionado = null;
     self.caracteristicaAIngresar = null;
     self.conexionAIngresar = null;
     self.lugarAIngresar = null;
+    self.conexionesPosibles = null;
     
     this.actualizarLista = function() {
         Paises.query(function(data) {
             self.paises = data;
         });
-        Paises.getL(function(data) {
-        	self.lugares = data;
-        });
     };
     
     this.actualizarLista();
+    
+    this.actualizarConexiones = function(idPais){
+    	Paises.getC({id: idPais}, function(data){
+    		self.conexionesPosibles = data;
+    	});
+    };
     
  // EDITAR PAIS
     this.editarPais = function(idPais) {
     	if(!angular.isUndefined(idPais)){ 
     	Paises.get({id: idPais}, function(data) {
-    		self.paisSeleccionado = data;
+    		self.paisSeleccionado = data; 
     		//self.nuevoHobbie = "fgfdg";
     		console.log(self.paisSeleccionado);
-    	
             });
+    	self.actualizarConexiones(idPais);
+    	Paises.getL({id: idPais}, function(data){
+        	self.lugares = data;
+        });
     	}
+    	
     };
 
 //AGREGAR PAIS    
@@ -81,22 +89,27 @@ app.controller('MapamundiController', function($resource, Paises) {
 // ELIMINAR CONEXION
     this.eliminarConexion = function(conexion) {
     	this.paisSeleccionado.conexiones.splice(this.paisSeleccionado.conexiones.indexOf(conexion),1);
+    	self.conexionesPosibles.push(conexion);
     };
 
 // AGREGAR CONEXION
     this.agregarConexion = function(){
         this.paisSeleccionado.conexiones.push(self.conexionAIngresar);
+        self.conexionesPosibles.splice(this.conexionesPosibles.indexOf(self.conexionAIngresar),1);
+        self.conexionAIngresar = this.conexionesPosibles[0];
         //$scope.newItem = null;
       };
    
 // ELIMINAR LUGAR
     this.eliminarLugar = function(lugar) {
       	this.paisSeleccionado.lugares.splice(this.paisSeleccionado.lugares.indexOf(lugar),1);
+      	self.lugares.push(lugar);
       };
       
 // AGREGAR LUGAR
     this.agregarLugar = function(){
         this.paisSeleccionado.lugares.push(self.lugarAIngresar.nombre);
+        self.lugares.splice(this.lugares.indexOf(self.lugarAIngresar),1);
         //$scope.newItem = null;
       };
     
