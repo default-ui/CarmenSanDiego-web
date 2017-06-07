@@ -47,18 +47,18 @@ app.controller('MapamundiController', function($resource, Paises) {
     this.agregarPais = function() {
    	 var result = ($.grep(self.paises, function(e){ return e.id === self.paisSeleccionado.id;}));
    	 var noExistePais = result.length == 0;
-   	if(noExistePais){
+   	/*if(noExistePais){
    		Paises.save(this.paisSeleccionado, function(data) {
    			self.actualizarLista();
    			self.paisSeleccionado = null;
    		});
    	}
-   	else{
+   	else{*/
    		Paises.update(this.paisSeleccionado, function(data) {
    			self.actualizarLista();
    			self.paisSeleccionado = null;
    		});
-   	}
+   	
    };
     
     this.limpiarCampos = function(){
@@ -129,7 +129,6 @@ app.controller('MapamundiController', function($resource, Paises) {
     this.nuevoPais = function(idPais) {
     	Paises.get({id: idPais}, function(data) {
     		self.paisSeleccionado = data; 
-    		console.log(self.paisSeleccionado);
             });
     	self.conexionesPosibles=self.paises;
     	self.actualizarLugares(idPais);

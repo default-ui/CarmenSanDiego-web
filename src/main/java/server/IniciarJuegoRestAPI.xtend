@@ -22,6 +22,7 @@ import miniModel.ViajarRequest
 import miniModel.MiniExpediente
 import miniModel.MiniVillano
 import carmenSanDiego.Villano
+import miniModel.MiniPaisConConxYCarac
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -159,7 +160,7 @@ class IniciarJuegoRestAPI {
 		nuevoPaisTemp.id = repo.nextIdPais
 		var nuevoPais = new Pais(nuevoPaisTemp, repo.mapa)
 		repo.mapa.agregarPais(nuevoPais)
-		ok(new MiniPais(nuevoPais).toJson)
+		ok(new MiniPaisConConxYCarac(nuevoPais).toJson)
 		
 	}
     
