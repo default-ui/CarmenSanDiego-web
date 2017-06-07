@@ -1,4 +1,4 @@
-package main.java.server
+package server
 
 import carmenSanDiego.Juego
 import utils.DummyData
@@ -12,7 +12,7 @@ class CarmenSanDiegoApp {
 		val expediente = DummyData.crearExpedienteDummy
 		var juego = new Juego(mapa, expediente)
 		
-        XTRest.startInstance(new IniciarJuegoRestAPI(new CarmenSanDiegoRepoWeb), 3000)
+        XTRest.startInstance(new server.IniciarJuegoRestAPI(new CarmenSanDiegoRepoWeb), 3000)
     }
 	
 }

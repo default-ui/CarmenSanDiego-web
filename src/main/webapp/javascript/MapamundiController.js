@@ -3,9 +3,12 @@ app.controller('MapamundiController', function($resource, Paises) {
 
     var self = this;
     self.paises = [];
+    self.lugares = null;
     self.paisSeleccionado = null;
     self.caracteristicaAIngresar = null;
     self.conexionAIngresar = null;
+    self.lugarAIngresar = null;
+    self.conexionesPosibles = null;
     
     this.actualizarLista = function() {
         Paises.query(function(data) {
@@ -15,17 +18,48 @@ app.controller('MapamundiController', function($resource, Paises) {
     
     this.actualizarLista();
     
+    this.actualizarConexiones = function(idPais){
+    	Paises.getC({id: idPais}, function(data){
+    		self.conexionesPosibles = data;
+    	});
+    };
+    
+    this.actualizarLugares = function(idPais){
+    	Paises.getL({id: idPais}, function(data){
+    		self.lugares = data;
+    	});
+    };
+    
  // EDITAR PAIS
     this.editarPais = function(idPais) {
     	if(!angular.isUndefined(idPais)){ 
     	Paises.get({id: idPais}, function(data) {
-    		self.paisSeleccionado = data;
-    		//self.nuevoHobbie = "fgfdg";
+    		self.paisSeleccionado = data; 
     		console.log(self.paisSeleccionado);
-    	
             });
+    	self.actualizarConexiones(idPais);
+    	self.actualizarLugares(idPais);
     	}
+    	
     };
+
+//AGREGAR PAIS    
+    this.agregarPais = function() {
+   	 var result = ($.grep(self.paises, function(e){ return e.id === self.paisSeleccionado.id;}));
+   	 var noExistePais = result.length == 0;
+   	if(noExistePais){
+   		Paises.save(this.paisSeleccionado, function(data) {
+   			self.actualizarLista();
+   			self.paisSeleccionado = null;
+   		});
+   	}
+   	else{
+   		Paises.update(this.paisSeleccionado, function(data) {
+   			self.actualizarLista();
+   			self.paisSeleccionado = null;
+   		});
+   	}
+   };
     
     this.limpiarCampos = function(){
     	self.paisSeleccionado = null;
@@ -52,7 +86,7 @@ app.controller('MapamundiController', function($resource, Paises) {
         });
     };
     
- // ELIMINAR CARACTERISTICA
+// ELIMINAR CARACTERISTICA
     this.eliminarCaracteristica = function(caracteristica) {
     	this.paisSeleccionado.caracteristicas.splice(this.paisSeleccionado.caracteristicas.indexOf(caracteristica),1);
     };
@@ -67,22 +101,40 @@ app.controller('MapamundiController', function($resource, Paises) {
 // ELIMINAR CONEXION
     this.eliminarConexion = function(conexion) {
     	this.paisSeleccionado.conexiones.splice(this.paisSeleccionado.conexiones.indexOf(conexion),1);
+    	self.conexionesPosibles.push(conexion);
     };
 
 // AGREGAR CONEXION
     this.agregarConexion = function(){
-    	console.log(self.conexionAIngresar);
         this.paisSeleccionado.conexiones.push(self.conexionAIngresar);
+        self.conexionesPosibles.splice(this.conexionesPosibles.indexOf(self.conexionAIngresar),1);
+        self.conexionAIngresar = this.conexionesPosibles[0];
         //$scope.newItem = null;
       };
-    
-    this.agregarPais = function() {
-        Paises.save(this.paisSeleccionado, function(data) {
-            //self.notificarMensaje('Libro agregado con id:' + data.id);
-            self.actualizarLista();
-            self.paisSeleccionado = null;
-        });
-    };
+   
+// ELIMINAR LUGAR
+    this.eliminarLugar = function(lugar) {
+      	this.paisSeleccionado.lugares.splice(this.paisSeleccionado.lugares.indexOf(lugar),1);
+      	self.lugares.push(lugar);
+      };
+      
+// AGREGAR LUGAR
+    this.agregarLugar = function(){
+        this.paisSeleccionado.lugares.push(self.lugarAIngresar);
+        self.lugares.splice(this.lugares.indexOf(self.lugarAIngresar),1);
+        //$scope.newItem = null;
+      };
+      
+ // NUEVO PAIS
+    this.nuevoPais = function(idPais) {
+    	Paises.get({id: idPais}, function(data) {
+    		self.paisSeleccionado = data; 
+    		console.log(self.paisSeleccionado);
+            });
+    	self.conexionesPosibles=self.paises;
+    	self.actualizarLugares(idPais);
+    	}
+    });
 
  // FEEDBACK & ERRORES
     this.msgs = [];
@@ -101,8 +153,6 @@ app.controller('MapamundiController', function($resource, Paises) {
         $timeout(function() {
             while (mensajes.length > 0) mensajes.pop();
         }, 3000);
-    }
-    	
+    };
     
-   
-  });
+ 

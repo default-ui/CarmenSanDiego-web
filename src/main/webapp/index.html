@@ -20,6 +20,9 @@
 
     <!-- UNDERSCORE -->
     <script src="node_modules/underscore/underscore-min.js"></script>
+    
+    <!-- BOOTBOX (dialogos de confirmacion) http://bootboxjs.com/ -->
+	<script src="node_modules/bootbox/bootbox.min.js"></script>
 
     <!-- Estilo personalizado -->
     <style type="text/css">
@@ -61,6 +64,7 @@
 
 <body>
 
+
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -76,8 +80,8 @@
         </div>
     </nav>
 
-    <div class="container" ui-view></div>
 
+    <div class="container" ui-view></div>
     <!-- nuestra aplicacion js -->
     <script src="javascript/app.js"></script>
     <script src="javascript/ExpedienteController.js"></script>
@@ -85,6 +89,5 @@
     <script src="javascript/ResolverMisterioController.js"></script>
     <script src="javascript/services.js"></script>
     <script src="javascript/routes.js"></script>
-
 </body>
 </html>

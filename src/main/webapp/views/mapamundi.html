@@ -4,6 +4,7 @@
     </h1>
 </div>
 
+
 <div class="row">
 
     <div class="col-sm-6">
@@ -41,7 +42,7 @@
 
             <div class="panel-footer">
 
-                <button type="button" class="btn btn-success btn-block" data-ng-click="mapamundiCtrl.limpiarCampos()">
+                <button type="button" class="btn btn-success btn-block" data-ng-click="mapamundiCtrl.nuevoPais(0)">
                     Nuevo País
                 </button>
 
@@ -127,7 +128,7 @@
                             <div class="panel-footer ">
 
                                 <div class="input-group">
-                                    <select class="form-control" ng-model='mapamundiCtrl.conexionAIngresar'  ng-options='conexion.nombre for conexion in mapamundiCtrl.paises'></select>
+                                    <select class="form-control" ng-model='mapamundiCtrl.conexionAIngresar'  ng-options='conexion.nombre for conexion in mapamundiCtrl.conexionesPosibles'></select>
                                     <div class="input-group-btn">
                                         <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar">
                                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -152,7 +153,7 @@
                                     <tr data-ng-repeat="lugar in mapamundiCtrl.paisSeleccionado.lugares">
                                         <td>{{lugar}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);"></button>
+                                            <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarLugar(lugar)"></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -161,9 +162,9 @@
                             <div class="panel-footer ">
 
                                 <div class="input-group">
-                                    <select class="form-control" ng-model='mapamundiCtrl.conexionAIngresar'  ng-options='conexion.nombre for conexion in mapamundiCtrl.paises'></select>
+                                    <select class="form-control" ng-model='mapamundiCtrl.lugarAIngresar'  ng-options='lugar for lugar in mapamundiCtrl.lugares'></select>
                                     <div class="input-group-btn ">
-                                        <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar">
+                                        <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarLugar()" aria-label="Agregar">
                                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                                         </button>
                                     </div>
@@ -175,9 +176,16 @@
                     </div>
 
                 </form>
+				<div class="panel-footer">
 
+                <button type="button" class="btn btn-success btn-block" data-ng-click="mapamundiCtrl.agregarPais()">
+                    Aceptar
+                </button>
+
+            </div>
             </div>
         </div>
     </div>
 
 </div>
+
