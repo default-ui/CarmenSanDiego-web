@@ -17,20 +17,16 @@ app.controller("ResolverMisterioController", function($resource, Villanos) {
         "villanoId": "2",
         "nombre": "Moriarty"
     }];
-*/
-
-    self.villanos = [];
 
     this.obtenerVillanos = function() {
-        Villanos.query(function(data) {
+        Libros.query(function(data) {
             self.villanos = data;
         }, errorHandler);
-    }();
+    };
 
     this.titulo = 'Lalala';
-    this.villanoId = null //self.villanos[0].villanoId;
-
-    this.seleccionado = null //self.villanos[0];
+    this.villanoId = this.villanos[0].villanoId;
+    this.seleccionado = self.villanos[0];
     this.ordenEmitida = null;
 
     this.emitirOrden = function() {
