@@ -1,117 +1,130 @@
 <div class="alert alert-success col-md-10" style="display: none; position: fixed; top: 50px; z-index: 1000"></div>
 <div class="alert alert-danger col-md-10" style="display: none; position: fixed; top: 50px; z-index: 1000"></div>
 
-<div class="page-header">
-    <h1>
-        Resolver Misterio: {{ resolverMisterioCtrl.titulo }}
-    </h1>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-
-        <div class="well well-lg">
-            <p>Ubicación actual: {{ resolverMisterioCtrl.paisActual.nombre}}</p>
-        </div>
-
+<div class="pantalla-de-inicio"> 
+    <div class="page-header">
+        <h1>
+            Desea iniciar partida?
+        </h1>
     </div>
+
+    <button type="button" class="btn btn-success btn-block" data-ng-click="resolverMisterioCtrl.iniciarJuego()">
+        Iniciar partida
+    </button>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="pantalla-de-juego" style="display: none"> 
+    <div class="page-header">
+        <h1>
+            Resolver Misterio: {{ resolverMisterioCtrl.titulo }}
+        </h1>
+    </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
-                    Viajar
-                </h3>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="well well-lg">
+                <p>Ubicación actual: {{ resolverMisterioCtrl.paisActual.nombre}}</p>
             </div>
-            <div class="panel-body">
-                <p>Elija un pais para viajar: </p>
-                <form>
-                    <div class="radio" ng-repeat="pais in resolverMisterioCtrl.paisActual.conexiones">
-                        <label>
-                            <input type="radio" name=pais.nombre id=pais.id value="pais.id"
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                        Viajar
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>Elija un pais para viajar: </p>
+                    <form>
+                        <div class="radio" ng-repeat="pais in resolverMisterioCtrl.paisActual.conexiones">
+                            <label>
+                                <input type="radio" name=pais.nombre id=pais.id value="pais.id"
                                 ng-model="some.path" ng-change="resolverMisterioCtrl.seleccionarPaisAViajar(this)" checked> {{pais.nombre}}
-                        </label>
-                    </div>
-                </form>
+                            </label>
+                        </div>
+                    </form>
 
-                <button type="button" class="btn btn-success btn-block" data-ng-click="resolverMisterioCtrl.viajar()">
-                    Viajar
-                </button>
+                    <button type="button" class="btn btn-success btn-block" data-ng-click="resolverMisterioCtrl.viajar()">
+                        Viajar
+                    </button>
 
 
+                </div>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                        Destinos Fallidos
+                    </h3>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="pais in resolverMisterioCtrl.destinosFallidos">
+                        <tr>
+                            <th scope="row"> {{$index + 1}} </th>
+                            <td> {{pais.nombre}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        Destinos Visitados
+                    </h3>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="pais in resolverMisterioCtrl.paisesVisitados">
+                        <tr>
+                            <th scope="row"> {{$index + 1}} </th>
+                            <td> {{pais.nombre}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
         </div>
+        <div class="col-md-4">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                    Destinos Fallidos
-                </h3>
-            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        Investigar
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Elija un lugar para investigar:
+                </div>
+                <!-- List group -->
+                <div class="list-group">
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                    </tr>
-                </thead>
-                <tbody ng-repeat="pais in resolverMisterioCtrl.destinosFallidos">
-                    <tr>
-                        <th scope="row"> {{$index + 1}} </th>
-                        <td> {{pais.nombre}} </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                    Destinos Visitados
-                </h3>
-            </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                    </tr>
-                </thead>
-                <tbody ng-repeat="pais in resolverMisterioCtrl.paisesVisitados">
-                    <tr>
-                        <th scope="row"> {{$index + 1}} </th>
-                        <td> {{pais.nombre}} </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-    </div>
-    <div class="col-md-4">
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    Investigar
-                </h3>
-            </div>
-            <div class="panel-body">
-                Elija un lugar para investigar:
-            </div>
-            <!-- List group -->
-            <div class="list-group">
-
-                <a class="list-group-item" ng-repeat="lugar in resolverMisterioCtrl.paisActual.lugares" 
+                    <a class="list-group-item" ng-repeat="lugar in resolverMisterioCtrl.paisActual.lugares" 
                     data-ng-click="resolverMisterioCtrl.pedirPista(lugar)" style="cursor: pointer;">
                     <div class="media-left">
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
@@ -164,7 +177,8 @@
         value="Pedir orden" style="margin-top: 8px">
 
     </div>
-</div>
+    </div>
 
-</div>
-</div>
+    </div>
+    </div>
+</div> 
