@@ -24,11 +24,11 @@
 
                         <td>
 
-                            <button type="button" class="btn btn-primary btn-sm" data-ng-click="mapamundiCtrl.editarPais(pais.id)" aria-label="Editar">
+                            <button type="button" class="btn btn-primary btn-xs" data-ng-click="mapamundiCtrl.editarPais(pais.id)" aria-label="Editar">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </button>
 
-                            <button type="button" class="btn btn-danger btn-sm" data-ng-click="mapamundiCtrl.eliminarPais(pais);" aria-label="Eliminar">
+                            <button type="button" class="btn btn-danger btn-xs" data-ng-click="mapamundiCtrl.eliminarPais(pais);" aria-label="Eliminar">
                                 <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                             </button>
 
@@ -81,7 +81,7 @@
                                     <tr data-ng-repeat="caracteristica in mapamundiCtrl.paisSeleccionado.caracteristicas">
                                         <td>{{caracteristica}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-remove-sign" data-ng-click="mapamundiCtrl.eliminarCaracteristica(caracteristica);" aria-label="Eliminar"></button>
+                                            <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove-sign" data-ng-click="mapamundiCtrl.eliminarCaracteristica(caracteristica);" aria-label="Eliminar"></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -94,7 +94,9 @@
                                     <input type="text" class="form-control" placeholder="Nueva Característica..." data-ng-model="mapamundiCtrl.caracteristicaAIngresar">
 
                                     <span class="input-group-btn">
-                                        <button class="btn btn-success glyphicon glyphicon-plus-sign" type="button" data-ng-click="mapamundiCtrl.agregarCaracteristica();" aria-label="Agregar"></button>
+                                        <button class="btn btn-success" type="button" data-ng-click="mapamundiCtrl.agregarCaracteristica();" aria-label="Agregar">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                        </button>
                                     </span>
 
                                 </div>
@@ -116,7 +118,7 @@
                                     <tr data-ng-repeat="conexion in mapamundiCtrl.paisSeleccionado.conexiones">
                                         <td>{{conexion.nombre}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);"></button>
+                                            <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);"></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -127,7 +129,9 @@
                                 <div class="input-group">
                                     <select class="form-control" ng-model='mapamundiCtrl.conexionAIngresar'  ng-options='conexion.nombre for conexion in mapamundiCtrl.paises'></select>
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-success glyphicon glyphicon-plus-sign" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar"></button>
+                                        <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                        </button>
                                     </div>
                                 </div>
 
@@ -148,7 +152,7 @@
                                     <tr data-ng-repeat="lugar in mapamundiCtrl.paisSeleccionado.lugares">
                                         <td>{{lugar}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);"></button>
+                                            <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);"></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -159,7 +163,9 @@
                                 <div class="input-group">
                                     <select class="form-control" ng-model='mapamundiCtrl.conexionAIngresar'  ng-options='conexion.nombre for conexion in mapamundiCtrl.paises'></select>
                                     <div class="input-group-btn ">
-                                        <button type="button" class="btn btn-success glyphicon glyphicon-plus-sign" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar"></button>
+                                        <button type="button" class="btn btn-success" data-ng-click="mapamundiCtrl.agregarConexion()" aria-label="Agregar">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                        </button>
                                     </div>
                                 </div>
 
