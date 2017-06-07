@@ -114,7 +114,7 @@
                                     <input type="text" class="form-control" placeholder="Nuevo Hobbie..." data-ng-model="expedienteCtrl.nuevoHobbie">
 
                                     <span class="input-group-btn">
-                                        <button class="btn btn-success glyphicon glyphicon-plus-sign" type="button" data-ng-click="expedienteCtrl.agregarHobbie()" aria-label="Agregar"></button>
+                                        <button class="btn btn-success glyphicon glyphicon-plus-sign" type="button" data-ng-click="expedienteCtrl.agregarHobbie()" ng-disabled="!expedienteCtrl.nuevoHobbie" aria-label="Agregar"></button>
                                     </span>
 
                                 </div>
@@ -149,7 +149,7 @@
                                     <input type="text" class="form-control" placeholder="Nueva Seña..." data-ng-model="expedienteCtrl.nuevaSena">
 
                                     <span class="input-group-btn">
-                                        <button class="btn btn-success glyphicon glyphicon-plus-sign" type="button" data-ng-click="expedienteCtrl.agregarSena(sena)" aria-label="Agregar"></button>
+                                        <button class="btn btn-success glyphicon glyphicon-plus-sign" type="button" data-ng-click="expedienteCtrl.agregarSena(sena)" ng-disabled="!expedienteCtrl.nuevaSena" aria-label="Agregar"></button>
                                     </span>
 
                                 </div>
@@ -164,7 +164,7 @@
             </div>
 
             <div class="panel-footer" ng-show="expedienteCtrl.mostrarElementos">
-                <button type="Submit" class="btn btn-success btn-block" data-ng-click="expedienteCtrl.agregarVillano()">
+                <button type="Submit" class="btn btn-success btn-block" data-ng-click="expedienteCtrl.agregarVillano()" ng-disabled="!expedienteCtrl.villanoActual.nombre">
                     Guardar Villano
                 </button>
             </div>
