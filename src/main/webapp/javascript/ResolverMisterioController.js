@@ -48,9 +48,17 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
     this.iniciarJuego = function() {
         ResolverMisterio.iniciarJuego(function(data) {
             self.actualizarTodo(data);
+            self.iniciarPartida();
             mostrarExito('El juego ha iniciado');
         }, errorHandler);
-    }();
+    };
+
+    this.iniciarPartida = function() {
+        self.obtenerVillanos();
+        $('.pantalla-de-inicio').hide(300, function() {
+            $('.pantalla-de-juego').show(300);
+        });
+    }
 
     this.seleccionarPaisAViajar = function(inputSeleccionado) {
         self.paisAViajar = (inputSeleccionado.pais);
@@ -77,7 +85,7 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
         ResolverMisterio.obtenerVillanos( function(data) {
             self.villanos = data;
         }, errorHandler);
-    }();
+    };
 
     this.villanoSeleccionado = null;
     this.ordenEmitida = null;
