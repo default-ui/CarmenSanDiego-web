@@ -78,7 +78,7 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
             self.pistaActual = pistaString.slice(0, -19);
             self.lugarActual = lugar;
             mostrarExito('Ha pedido una pista para ' + lugar);
-        });
+        }, errorHandler);
     };
 
     this.obtenerVillanos = function() {
@@ -90,16 +90,25 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
     this.villanoSeleccionado = null;
     this.ordenEmitida = null;
 
-    this.emitirOrden = function() {
-        var ordenRequest = { villanoId: self.villanoSeleccionado, casoId: self.juego.id };
+    this.ordenYaEmitida = function(data) {
+        self.ordenEmitida = self.villanoSeleccionado.nombre;
+        mostrarExito('Orden emitida correctamente');
+    }
 
-        ResolverMisterio.emitirOrden(ordenRequest, function(data) {
-            self.ordenEmitida = self.villanoSeleccionado;
-            mostrarExito(data);
+    this.emitirOrden = function() {
+        var ordenRequest = { casoId: self.juego.id, villanoId: self.villanoSeleccionado.id };
+
+        ResolverMisterio.emitirOrden(ordenRequest, function(data){ self.ordenYaEmitida(data)}, 
+            function(data){ self.ordenYaEmitida(data)});
+    };
+
+    this.obtenerVillano = function(villanoId) {
+        ResolverMisterio.obtenerVillano({id: villanoId}, function(data) {
+            self.villanoSeleccionado = data;
         }, errorHandler);
     };
 
     this.seleccionarVillano = function() {
-        self.villanoSeleccionado = $scope.ordenSelector;
+        self.obtenerVillano($scope.ordenSelector);
     };
 });
