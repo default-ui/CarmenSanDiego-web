@@ -24,30 +24,42 @@ app.controller('MapamundiController', function($resource, Paises) {
     	});
     };
     
+    this.actualizarLugares = function(idPais){
+    	Paises.getL({id: idPais}, function(data){
+    		self.lugares = data;
+    	});
+    };
+    
  // EDITAR PAIS
     this.editarPais = function(idPais) {
     	if(!angular.isUndefined(idPais)){ 
     	Paises.get({id: idPais}, function(data) {
     		self.paisSeleccionado = data; 
-    		//self.nuevoHobbie = "fgfdg";
     		console.log(self.paisSeleccionado);
             });
     	self.actualizarConexiones(idPais);
-    	Paises.getL({id: idPais}, function(data){
-        	self.lugares = data;
-        });
+    	self.actualizarLugares(idPais);
     	}
     	
     };
 
 //AGREGAR PAIS    
     this.agregarPais = function() {
-        Paises.update(this.paisSeleccionado, function(data) {
-            //self.notificarMensaje('Libro agregado con id:' + data.id);
-            self.actualizarLista();
-            //self.nuevoPais = null;
-        });
-    };
+   	 var result = ($.grep(self.paises, function(e){ return e.id === self.paisSeleccionado.id;}));
+   	 var noExistePais = result.length == 0;
+   	if(noExistePais){
+   		Paises.save(this.paisSeleccionado, function(data) {
+   			self.actualizarLista();
+   			self.paisSeleccionado = null;
+   		});
+   	}
+   	else{
+   		Paises.update(this.paisSeleccionado, function(data) {
+   			self.actualizarLista();
+   			self.paisSeleccionado = null;
+   		});
+   	}
+   };
     
     this.limpiarCampos = function(){
     	self.paisSeleccionado = null;
@@ -108,18 +120,21 @@ app.controller('MapamundiController', function($resource, Paises) {
       
 // AGREGAR LUGAR
     this.agregarLugar = function(){
-        this.paisSeleccionado.lugares.push(self.lugarAIngresar.nombre);
+        this.paisSeleccionado.lugares.push(self.lugarAIngresar);
         self.lugares.splice(this.lugares.indexOf(self.lugarAIngresar),1);
         //$scope.newItem = null;
       };
-    
-    this.agregarPais = function() {
-        Paises.save(this.paisSeleccionado, function(data) {
-            //self.notificarMensaje('Libro agregado con id:' + data.id);
-            self.actualizarLista();
-            self.paisSeleccionado = null;
-        });
-    };
+      
+ // NUEVO PAIS
+    this.nuevoPais = function(idPais) {
+    	Paises.get({id: idPais}, function(data) {
+    		self.paisSeleccionado = data; 
+    		console.log(self.paisSeleccionado);
+            });
+    	self.conexionesPosibles=self.paises;
+    	self.actualizarLugares(idPais);
+    	}
+    });
 
  // FEEDBACK & ERRORES
     this.msgs = [];
@@ -138,5 +153,6 @@ app.controller('MapamundiController', function($resource, Paises) {
         $timeout(function() {
             while (mensajes.length > 0) mensajes.pop();
         }, 3000);
-    }
-  });
+    };
+    
+ 

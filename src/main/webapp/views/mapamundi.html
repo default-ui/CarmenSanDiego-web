@@ -42,7 +42,7 @@
 
             <div class="panel-footer">
 
-                <button type="button" class="btn btn-success btn-block" data-ng-click="mapamundiCtrl.limpiarCampos()">
+                <button type="button" class="btn btn-success btn-block" data-ng-click="mapamundiCtrl.nuevoPais(0)">
                     Nuevo País
                 </button>
 
@@ -158,7 +158,7 @@
                             <div class="panel-footer ">
 
                                 <div class="input-group">
-                                    <select class="form-control" ng-model='mapamundiCtrl.lugarAIngresar'  ng-options='lugar.nombre for lugar in mapamundiCtrl.lugares'></select>
+                                    <select class="form-control" ng-model='mapamundiCtrl.lugarAIngresar'  ng-options='lugar for lugar in mapamundiCtrl.lugares'></select>
                                     <div class="input-group-btn ">
                                         <button type="button" class="btn btn-success glyphicon glyphicon-plus-sign" data-ng-click="mapamundiCtrl.agregarLugar()" aria-label="Agregar"></button>
                                     </div>
@@ -170,7 +170,13 @@
                     </div>
 
                 </form>
+				<div class="panel-footer">
 
+                <button type="button" class="btn btn-success btn-block" data-ng-click="mapamundiCtrl.agregarPais()">
+                    Aceptar
+                </button>
+
+            </div>
             </div>
         </div>
     </div>

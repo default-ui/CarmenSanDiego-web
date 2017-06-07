@@ -4,7 +4,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider
 
-
         .state('resolverMisterio', {
             url: "/resolverMisterio",
             templateUrl: "../views/resolverMisterio.html",
@@ -13,6 +12,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
         .state('expediente', {
             url: "/expediente",
+            templateUrl: "../views/expediente.html",
+            controller: "ExpedienteController as expedienteCtrl"
+        })
+        
+         .state('expedienteEditable', {
+            url: "/expedienteEditable",
             templateUrl: "../views/expediente.html",
             controller: "ExpedienteController as expedienteCtrl"
         })

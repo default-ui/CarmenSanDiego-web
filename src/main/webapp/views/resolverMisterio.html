@@ -1,141 +1,138 @@
-<div class="page-header">
-    <h1>
-        Resolver Misterio: {{ resolverMisterioCtrl.titulo }}
-    </h1>
+<div class="alert alert-success col-md-10" style="display: none; position: fixed; top: 50px; z-index: 1000"></div>
+<div class="alert alert-danger col-md-10" style="display: none; position: fixed; top: 50px; z-index: 1000"></div>
+
+<div class="pantalla-de-inicio"> 
+    <div class="page-header">
+        <h1>
+            Desea iniciar partida?
+        </h1>
+    </div>
+
+    <button type="button" class="btn btn-success btn-block" data-ng-click="resolverMisterioCtrl.iniciarJuego()">
+        Iniciar partida
+    </button>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-
-        <div class="well well-lg">
-            <p>Ubicación</p>
-        </div>
-
+<div class="pantalla-de-juego" style="display: none"> 
+    <div class="page-header">
+        <h1>
+            Resolver Misterio: {{ resolverMisterioCtrl.titulo }}
+        </h1>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
+    <div class="row">
+        <div class="col-md-12">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
-                Viajar
-            </h3>
+            <div class="well well-lg">
+                <p>Ubicación actual: {{ resolverMisterioCtrl.paisActual.nombre}}</p>
             </div>
-            <div class="panel-body">
-
-                <p>Lorem ipsum dolor est laborum.</p>
-
-                <form>
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> Dolore eu fugiat nulla pariatur.
-                        </label>
-                    </div>
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Consectetur adipisicing elit, sed do pariatur.
-                        </label>
-                    </div>
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Excepteur sint occaecat cupidatat non proident.
-                        </label>
-                    </div>
-
-                </form>
-
-                <button type="button" class="btn btn-success btn-block">
-                    Viajar
-                </button>
-
-
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                Destinos Fallidos
-            </h3>
-            </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                    </tr>
-                </tbody>
-            </table>
 
         </div>
-
-
-
     </div>
-    <div class="col-md-4">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                Investigar
-            </h3>
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                        Viajar
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>Elija un pais para viajar: </p>
+                    <form>
+                        <div class="radio" ng-repeat="pais in resolverMisterioCtrl.paisActual.conexiones">
+                            <label>
+                                <input type="radio" name=pais.nombre id=pais.id value="pais.id"
+                                ng-model="some.path" ng-change="resolverMisterioCtrl.seleccionarPaisAViajar(this)" checked> {{pais.nombre}}
+                            </label>
+                        </div>
+                    </form>
+
+                    <button type="button" class="btn btn-success btn-block" data-ng-click="resolverMisterioCtrl.viajar()">
+                        Viajar
+                    </button>
+
+
+                </div>
             </div>
-            <div class="panel-body">
-                Lorem ipsum dolor sit amet, laborum.
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                        Destinos Fallidos
+                    </h3>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="pais in resolverMisterioCtrl.destinosFallidos">
+                        <tr>
+                            <th scope="row"> {{$index + 1}} </th>
+                            <td> {{pais.nombre}} </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <!-- List group -->
-            <div class="list-group">
 
-                <a href="#" class="list-group-item">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        Destinos Visitados
+                    </h3>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="pais in resolverMisterioCtrl.paisesVisitados">
+                        <tr>
+                            <th scope="row"> {{$index + 1}} </th>
+                            <td> {{pais.nombre}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        Investigar
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Elija un lugar para investigar:
+                </div>
+                <!-- List group -->
+                <div class="list-group">
+
+                    <a class="list-group-item" ng-repeat="lugar in resolverMisterioCtrl.paisActual.lugares" 
+                    data-ng-click="resolverMisterioCtrl.pedirPista(lugar)" style="cursor: pointer;">
                     <div class="media-left">
-                        <img class="media-object" src="..." alt="...">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Embajada</h4>
+                        <h4 class="media-heading">{{lugar}}</h4>
                     </div>
                 </a>
-
-                <a href="#" class="list-group-item">
-                    <div class="media-left">
-                        <img class="media-object" src="..." alt="...">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Club</h4>
-                    </div>
-                </a>
-
-                <a href="#" class="list-group-item">
-                    <div class="media-left">
-                        <img class="media-object" src="..." alt="...">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Biblioteca</h4>
-                    </div>
-                </a>
-
             </div>
         </div>
 
@@ -146,17 +143,13 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                Visitando
-            </h3>
+                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                    Visitando
+                </h3>
             </div>
             <div class="panel-body">
-                <p>
-                    Panel content
-                </p>
-
-                <button type="button" class="btn btn-default btn-block">Block level button</button>
-
+                <h3> Lugar visitado: {{ resolverMisterioCtrl.lugarActual }} </h3>
+                <p> {{ resolverMisterioCtrl.pistaActual }} </p>
             </div>
         </div>
 
@@ -171,20 +164,21 @@
 
             <div>
                 <label>Emitida contra:</label>
-                <span class="orden-emitida-js">{{resolverMisterioCtrl.ordenEmitida}}</span>
+                <span> {{resolverMisterioCtrl.ordenEmitida}} </span>
             </div>
 
             <label for="orden">Emitir Orden de arresto contra:</label>
             <select class="form-control select-villano-js" name="orden" 
-            ng-model="selector" ng-change="resolverMisterioCtrl.seleccionarVillano(this)"
-            ng-options="villano.villanoId as villano.nombre for villano in resolverMisterioCtrl.villanos track by villano.villanoId">
+            ng-model="ordenSelector" ng-change="resolverMisterioCtrl.seleccionarVillano()"
+            ng-options="villano.id as villano.nombre for villano in resolverMisterioCtrl.villanos track by villano.id">
         </select>
         <input type="button" data-ng-click="resolverMisterioCtrl.emitirOrden()"
         class="btn-info form-control"
         value="Pedir orden" style="margin-top: 8px">
 
     </div>
-</div>
+    </div>
 
     </div>
-</div>
+    </div>
+</div> 

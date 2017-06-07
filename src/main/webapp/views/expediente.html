@@ -23,7 +23,7 @@
 
                             <button type="button" class="btn btn-primary"  data-ng-click="expedienteCtrl.verVillano(villano.id)" aria-label="Editar">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                <button type="button" class="btn btn-danger" data-ng-click="expedienteCtrl.eliminarVillano(villano.id);" aria-label="Eliminar">
+                                <button type="button" class="btn btn-danger" ng-show="expedienteCtrl.mostrarElementos"  data-ng-click="expedienteCtrl.eliminarVillano(villano.id);" aria-label="Eliminar">
                                     <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                                 </button>
                         </td>
@@ -32,7 +32,7 @@
             </div>
             <br>
             <!-- Boton de nuevo villano -->
-            <button type="submit" class="btn btn-primary" data-ng-click="expedienteCtrl.limpiarCampos()">Nuevo</button>
+            <button type="submit" class="btn btn-primary" ng-show="expedienteCtrl.mostrarElementos" data-ng-click="expedienteCtrl.limpiarCampos()">Nuevo</button>
         </div>
         <div class="col-sm-1">
         </div>
@@ -65,7 +65,7 @@
                                     <td  vertical-align: "middle">{{hobbie}}</td>
                                     <!-- Eliminacion de hobbies -->
                                          <td nowrap class="col-xs-1">
-                                             <button type="button" class="btn btn-danger" data-ng-click="expedienteCtrl.eliminarHobbie(hobbie);" aria-label="Eliminar">
+                                             <button type="button" class="btn btn-danger" data-ng-click="expedienteCtrl.eliminarHobbie(hobbie);" ng-show="expedienteCtrl.mostrarElementos" aria-label="Eliminar">
                                                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                                              </button>
                                          </td>
@@ -74,10 +74,10 @@
                             </table>
                             <table>
                                 <td>
-                                    <input data-ng-model="expedienteCtrl.nuevoHobbie" type="text"  class="form-control" placeholder="">
+                                    <input data-ng-model="expedienteCtrl.nuevoHobbie" ng-show="expedienteCtrl.mostrarElementos" type="text"  class="form-control" placeholder="">
                                 </td>
                                 <td nowrap class="col-xs-1">
-                                    <button type="button" class="btn btn-success" data-ng-click="expedienteCtrl.agregarHobbie()"  aria-label="Agregar">
+                                    <button type="button" class="btn btn-success" data-ng-click="expedienteCtrl.agregarHobbie()" ng-show="expedienteCtrl.mostrarElementos"  aria-label="Agregar">
                                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                                     </button>
                                 </td>
@@ -94,7 +94,7 @@
                                     <td  vertical-align: "middle">{{senas}}</td>
                                     <td nowrap class="col-xs-1">
                                         <!-- POR EL MOMENTO LAS SENAS NO SE ELIMINAN -->
-                                            <button type="button" class="btn btn-danger" data-ng-click="expedienteCtrl.eliminarSena(sena)" aria-label="Eliminar">
+                                            <button type="button" class="btn btn-danger" data-ng-click="expedienteCtrl.eliminarSena(sena)" ng-show="expedienteCtrl.mostrarElementos" aria-label="Eliminar">
                                               <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
                                             </button>
                                         </td>
@@ -104,10 +104,10 @@
                             <table>
 
                                 <td>
-                                    <input data-ng-model="expedienteCtrl.nuevaSena" type="text" id="disabledTextInput" class="form-control" placeholder="">
+                                    <input data-ng-model="expedienteCtrl.nuevaSena" ng-show="expedienteCtrl.mostrarElementos" type="text" id="disabledTextInput" class="form-control" placeholder="">
                                 </td>
                                 <td nowrap class="col-xs-1">
-                                    <button type="button" class="btn btn-success" data-ng-click="expedienteCtrl.agregarSena(sena)" aria-label="Agregar">
+                                    <button type="button" class="btn btn-success" data-ng-click="expedienteCtrl.agregarSena(sena)" ng-show="expedienteCtrl.mostrarElementos" aria-label="Agregar">
                                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                                     </button>
                                 </td>
@@ -116,7 +116,7 @@
 
                             </table>
                             <hr style="height:1px;border:none;color:#0ff;background-color:#0ff;" />
-                            <button type="Submit" class="btn btn-success pull-right" data-ng-click="expedienteCtrl.agregarVillano()">Aceptar</button>
+                            <button type="Submit" class="btn btn-success pull-right" data-ng-click="expedienteCtrl.agregarVillano()" ng-show="expedienteCtrl.mostrarElementos">Aceptar</button>
                         </div>
                     </fieldset>
                 </form>
