@@ -25,6 +25,7 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
     self.pistaActual = null;
     self.paisesVisitados = [];
     self.lugarActual = null;
+    self.titulo = null;
 
     this.actualizarPais = function(id) {
         ResolverMisterio.obtenerPais({id: id}, function(data) {
@@ -43,6 +44,7 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
         self.actualizarPais(data.pais.id);
         self.destinosFallidos = data.paisesFallidos;
         self.paisesVisitados = data.recorrido;
+        self.titulo = data.reporte;
     };
 
     this.iniciarJuego = function() {
