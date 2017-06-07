@@ -6,7 +6,7 @@ mostrarMensaje = function(claseDelMensajero ,mensaje) {
 }
 
 mostrarError = function(error) { mostrarMensaje('.alert-danger', error); };
-mostrarExito = function(exito) { mostrarMensaje('.alert-success', exito); }; 
+mostrarExito = function(exito) { mostrarMensaje('.alert-success', exito); };
 
 app.controller("ResolverMisterioController", function($scope, $resource, ResolverMisterio) {
     'use strict';
@@ -100,7 +100,7 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
     this.emitirOrden = function() {
         var ordenRequest = { casoId: self.juego.id, villanoId: self.villanoSeleccionado.id };
 
-        ResolverMisterio.emitirOrden(ordenRequest, function(data){ self.ordenYaEmitida(data)}, 
+        ResolverMisterio.emitirOrden(ordenRequest, function(data){ self.ordenYaEmitida(data)},
             function(data){ self.ordenYaEmitida(data)});
     };
 

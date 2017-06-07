@@ -4,32 +4,32 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos, $
     var self = this;
     self.villanos = [];
     self.villanoActual = null;
-    self.nombreVillanoAEditar = " ";
-    self.nuevoHobbie = " ";
-    self.nuevaSena = " ";
+    self.nombreVillanoAEditar = "";
+    self.nuevoHobbie = "";
+    self.nuevaSena = "";
     self.mostrarElementos = $location.path() == "/expedienteEditable";
 
     // GET todos los villanos
     this.actualizarLista = function() {
         Villanos.query(function(data) {
             self.villanos = data;
-            
+
         });
     };
-    
-    
-    
+
+
+
     this.actualizarLista();
 
     // GET villano by ID
     this.verVillano = function(idVillano) {
-    	if(!angular.isUndefined(idVillano)){ 
+    	if(!angular.isUndefined(idVillano)){
     	Villanos.get({id: idVillano}, function(data) {
     		self.villanoActual = data;
             });
     	}
     };
-    
+
     // DELETE villano by ID
     this.eliminarVillano = function(idVillano) {
                 Villanos.remove({id: idVillano}, function() {
@@ -37,13 +37,13 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos, $
                     self.actualizarLista();
                 });
     };
-    
+
     // Utilizado en el boton Nuevo
     this.limpiarCampos = function(){
     	self.villanoActual = null;
     	self.actualizarLista();
     };
-    
+
     // si el villano no existia, lo crea. Si el villano ya existia, lo edita.
     this.agregarVillano = function() {
     	 var result = ($.grep(self.villanos, function(e){ return e.id === self.villanoActual.id;}));
@@ -61,8 +61,8 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos, $
     		});
     	}
     };
-    
- 
+
+
     // edicion de hobbies del villano
     this.agregarHobbie = function(){
     	// como la variable villano actual puede ser null, no puedo definirla arriba. Entonces, tengo que definirla aca (solo una primera vez).
@@ -79,15 +79,15 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos, $
     		this.notificarMensaje("Introduce un hobbie.")
     	}
     };
-    
+
    this.eliminarHobbie = function(elem){
 	  // console.log(self.villanoActual);
     	// obtengo el index y borro un solo elemento de la lista
     	var index = self.villanoActual.hobbies.indexOf(elem);
-    	self.villanoActual.hobbies.splice(index, 1); 
- 
+    	self.villanoActual.hobbies.splice(index, 1);
+
     };
-    
+
     // edicion de senas particulares
     this.agregarSena = function(){
     	// como la variable villano actual puede ser null, no puedo definirla arriba. Entonces, tengo que definirla aca (solo una primera vez).
@@ -104,20 +104,20 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos, $
     		this.notificarMensaje("Introduce una seña.")
     	}
     };
-    
+
    this.eliminarSena = function(elem){
     	// obtengo el index y borro un solo elemento de la lista
     	var index = self.villanoActual.senasParticulares.indexOf(elem);
-    	self.villanoActual.senasParticulares.splice(index, 1); 
- 
+    	self.villanoActual.senasParticulares.splice(index, 1);
+
     };
-    
+
     // FEEDBACK & ERRORES
-    
+
     function errorHandler(error) {
         self.notificarError(error.data);
     }
-    
+
     this.msgs = [];
     this.notificarMensaje = function(mensaje) {
         this.msgs.push(mensaje);
@@ -137,6 +137,6 @@ app.controller('ExpedienteController', function($resource, $timeout, Villanos, $
     }
 
 });
-    	
-    
-  
+
+
+

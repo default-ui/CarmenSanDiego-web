@@ -4,123 +4,177 @@
     </h1>
 </div>
 
-    <!-- Separacion en columnas -->
-    <div class="well-lg">
-        <div class="col-sm-4">
-            <div class="" style="height: 500px;overflow: auto" >
-                <!-- COLUMNA IZQUIERDA -->
-                <!-- Tabla -->
-                <table class="table table-bordered table-hover example-animate-container">
-                    <tr class="table-info">
-                        <th>Villanos</th>
-                        <th></th>
-                    </tr>
-                    <tr data-ng-repeat="villano in expedienteCtrl.villanos ">
-                        <td  vertical-align="middle">{{villano.nombre}}</td>
+<div class="row">
 
-                        <!-- Botones -->
-                        <td nowrap class="col-xs-2">
+    <div class="col-sm-6">
 
-                            <button type="button" class="btn btn-primary"  data-ng-click="expedienteCtrl.verVillano(villano.id)" aria-label="Editar">
-                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                <button type="button" class="btn btn-danger" ng-show="expedienteCtrl.mostrarElementos"  data-ng-click="expedienteCtrl.eliminarVillano(villano.id);" aria-label="Eliminar">
-                                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                </button>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    Villanos en Expediente
+                </h3>
+            </div>
+
+            <table class="table table-hover table-fixed">
+                <tbody style="max-height: 500px">
+                    <tr data-ng-repeat="villano in expedienteCtrl.villanos">
+
+                        <td>{{villano.nombre}}</td>
+
+                        <td>
+
+                            <button type="button" class="btn btn-primary btn-xs glyphicon" data-ng-click="expedienteCtrl.verVillano(villano.id)" aria-label="Editar">
+                                <!-- muestro icono de ver o editar -->
+                                <span class="glyphicon glyphicon-pencil" ng-show="expedienteCtrl.mostrarElementos" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-eye-open" ng-show="!expedienteCtrl.mostrarElementos" aria-hidden="true"></span>
+                            </button>
+
+                            <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove-sign" ng-show="expedienteCtrl.mostrarElementos" data-ng-click="expedienteCtrl.eliminarVillano(villano.id);" aria-label="Eliminar"></button>
+
                         </td>
+
                     </tr>
-                </table>
+
+                </tbody>
+            </table>
+
+            <div class="panel-footer" ng-show="expedienteCtrl.mostrarElementos">
+
+                <button type="button" class="btn btn-success btn-block" data-ng-click="expedienteCtrl.limpiarCampos()">
+                    Nuevo Villano
+                </button>
+
             </div>
-            <br>
-            <!-- Boton de nuevo villano -->
-            <button type="submit" class="btn btn-primary" ng-show="expedienteCtrl.mostrarElementos" data-ng-click="expedienteCtrl.limpiarCampos()">Nuevo</button>
-        </div>
-        <div class="col-sm-1">
-        </div>
-        <div class="col-lg-6 well well-lg">
-            <div>
-                <form name="vilForm" role="form">
-                    <fieldset>
-                        <div class="form-group">
-                            <!-- COLUMNA IZQUIERDA -->
-                            <!-- NOMBRE-->
-                            <label for="titulo">Nombre</label>
-                            <input data-ng-model="expedienteCtrl.villanoActual.nombre" type="text" id="nombre" class="form-control" placeholder="">
-                            <hr style="height:1px;border:none;color:#0fb;background-color:#0fb;" />
-                        </div>
-                        <!-- SEXO -->
-                        <div class="form-group">
-                            <select data-ng-model="expedienteCtrl.villanoActual.sexo">
-                                <option value="Femenino">Femenino</option>
-                                <option value="Masculino">Masculino</option>
-                            </select>
-                        </div>
-                        <!-- hobbies -->
-                        <div class="form-group">
-                            <table class="table table-bordered table-hover table-condensed example-animate-container">
-                                <tr class="table-info">
-                                    <th>Hobbies</th>
-                                    <th></th>
-                                </tr>
-                                <tr data-ng-repeat="hobbie in expedienteCtrl.villanoActual.hobbies">
-                                    <td  vertical-align: "middle">{{hobbie}}</td>
-                                    <!-- Eliminacion de hobbies -->
-                                         <td nowrap class="col-xs-1">
-                                             <button type="button" class="btn btn-danger" data-ng-click="expedienteCtrl.eliminarHobbie(hobbie);" ng-show="expedienteCtrl.mostrarElementos" aria-label="Eliminar">
-                                               <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                             </button>
-                                         </td>
-                                          
-                                </tr>
-                            </table>
-                            <table>
-                                <td>
-                                    <input data-ng-model="expedienteCtrl.nuevoHobbie" ng-show="expedienteCtrl.mostrarElementos" type="text"  class="form-control" placeholder="">
-                                </td>
-                                <td nowrap class="col-xs-1">
-                                    <button type="button" class="btn btn-success" data-ng-click="expedienteCtrl.agregarHobbie()" ng-show="expedienteCtrl.mostrarElementos"  aria-label="Agregar">
-                                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-                            </table>
-                            <hr style="height:1px;border:none;color:#0fb;background-color:#0fb;" />
-                        </div>
-                        <div class="form-group">
-                            <table class="table table-bordered table-hover table-condensed example-animate-container">
-                                <tr class="table-info">
-                                    <th>Señas particulares</th>
-                                    <th></th>
-                                </tr>
-                                <tr data-ng-repeat="senas in expedienteCtrl.villanoActual.senasParticulares">
-                                    <td  vertical-align: "middle">{{senas}}</td>
-                                    <td nowrap class="col-xs-1">
-                                        <!-- POR EL MOMENTO LAS SENAS NO SE ELIMINAN -->
-                                            <button type="button" class="btn btn-danger" data-ng-click="expedienteCtrl.eliminarSena(sena)" ng-show="expedienteCtrl.mostrarElementos" aria-label="Eliminar">
-                                              <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                            </button>
-                                        </td>
-                                         
-                                </tr>
-                            </table>
-                            <table>
 
-                                <td>
-                                    <input data-ng-model="expedienteCtrl.nuevaSena" ng-show="expedienteCtrl.mostrarElementos" type="text" id="disabledTextInput" class="form-control" placeholder="">
-                                </td>
-                                <td nowrap class="col-xs-1">
-                                    <button type="button" class="btn btn-success" data-ng-click="expedienteCtrl.agregarSena(sena)" ng-show="expedienteCtrl.mostrarElementos" aria-label="Agregar">
-                                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                                    </button>
-                                </td>
-
-                            </table>
-
-                            </table>
-                            <hr style="height:1px;border:none;color:#0ff;background-color:#0ff;" />
-                            <button type="Submit" class="btn btn-success pull-right" data-ng-click="expedienteCtrl.agregarVillano()" ng-show="expedienteCtrl.mostrarElementos">Aceptar</button>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
         </div>
+
     </div>
+
+    <div class="col-sm-6">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    Villano
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <form name="vilForm" role="form">
+
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="titulo">Nombre</label>
+                        <input data-ng-model="expedienteCtrl.villanoActual.nombre" type="text" id="nombre" name="nombre" class="form-control" placeholder="">
+                    </div>
+
+                    <!-- Sexo -->
+                    <div class="form-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p class="panel-title">Sexo</p>
+                            </div>
+
+                            <div class="panel-footer ">
+
+                                <select class="form-control" data-ng-model="expedienteCtrl.villanoActual.sexo" id="sexo" name="sexo">
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Hobbies -->
+                    <div class="form-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p class="panel-title">Hobbies</p>
+                            </div>
+
+                            <table class="table table-hover table-fixed">
+                                <tbody>
+                                    <tr data-ng-repeat="hobbie in expedienteCtrl.villanoActual.hobbies">
+                                        <td>{{hobbie}}</td>
+                                        <td>
+                                            <button ng-show="expedienteCtrl.mostrarElementos" type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove-sign" data-ng-click="expedienteCtrl.eliminarHobbie(hobbie);" aria-label="Eliminar"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer" ng-show="expedienteCtrl.mostrarElementos">
+
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" placeholder="Nuevo Hobbie..." data-ng-model="expedienteCtrl.nuevoHobbie">
+
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" data-ng-click="expedienteCtrl.agregarHobbie()" ng-disabled="!expedienteCtrl.nuevoHobbie" aria-label="Agregar">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                        </button>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Señas -->
+                    <div class="form-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p class="panel-title">Señas Particulares</p>
+                            </div>
+
+                            <table class="table table-hover table-fixed">
+                                <tbody>
+                                    <tr data-ng-repeat="senas in expedienteCtrl.villanoActual.senasParticulares">
+                                        <td>{{senas}}</td>
+                                        <td>
+                                            <button ng-show="expedienteCtrl.mostrarElementos" type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove-sign" aria-label="Eliminar" data-ng-click="mapamundiCtrl.eliminarConexion(conexion);"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel-footer" ng-show="expedienteCtrl.mostrarElementos">
+
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" placeholder="Nueva Seña..." data-ng-model="expedienteCtrl.nuevaSena">
+
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" data-ng-click="expedienteCtrl.agregarSena(sena)" ng-disabled="!expedienteCtrl.nuevaSena" aria-label="Agregar">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                        </button>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="panel-footer" ng-show="expedienteCtrl.mostrarElementos">
+                <button type="Submit" class="btn btn-success btn-block" data-ng-click="expedienteCtrl.agregarVillano()" ng-disabled="!expedienteCtrl.villanoActual.nombre">
+                    Guardar Villano
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
