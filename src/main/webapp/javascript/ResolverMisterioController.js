@@ -1,9 +1,12 @@
-mostrarMensaje = function(error) {
-    var alerta = $('.alert-success');
-    alerta.text(error);
+mostrarMensaje = function(claseDelMensajero ,mensaje) {
+    var alerta = $(claseDelMensajero);
+    alerta.text(mensaje);
     alerta.show(300);
     setTimeout(function(){ alerta.hide(2000); }, 3000);
 }
+
+mostrarError = function(error) { mostrarMensaje('.alert-danger', error); };
+mostrarExito = function(exito) { mostrarMensaje('.alert-success', exito); }; 
 
 app.controller("ResolverMisterioController", function($scope, $resource, ResolverMisterio) {
     'use strict';
@@ -11,7 +14,7 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
     var self = this;
 
     function errorHandler(error) {
-        self.notificarError(error.data);
+        mostrarError(error.data);
     };
 
     self.juego = null;
@@ -20,6 +23,8 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
     self.destinosFallidos = [];
     self.paisAViajar = null;
     self.pistaActual = null;
+    self.paisesVisitados = [];
+    self.lugarActual = null;
 
     this.actualizarPais = function(id) {
         ResolverMisterio.obtenerPais({id: id}, function(data) {
@@ -37,11 +42,13 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
         self.juego = data;
         self.actualizarPais(data.pais.id);
         self.destinosFallidos = data.paisesFallidos;
+        self.paisesVisitados = data.recorrido;
     };
 
     this.iniciarJuego = function() {
         ResolverMisterio.iniciarJuego(function(data) {
             self.actualizarTodo(data);
+            mostrarExito('El juego ha iniciado');
         }, errorHandler);
     }();
 
@@ -53,12 +60,16 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
         var viajarRequest = { destinoId: self.paisAViajar.id, casoId: self.juego.id };
         ResolverMisterio.viajar(viajarRequest, function(data) {
             self.actualizarTodo(data);
+            mostrarExito('Ha viajado a ' + data.pais.nombre);
         }, errorHandler);
     };
 
     this.pedirPista = function(lugar) {
-        ResolverMisterio.pedirPista({casoId: self.juego.id, lugar: lugar}, function(data){
-            self.pistaActual = data;
+        ResolverMisterio.pedirPista({id: self.juego.id, lugar: lugar}, function(data) {
+            var pistaString = _.reduce(data, function(memo, char) {return memo + char}, "");
+            self.pistaActual = pistaString.slice(0, -19);
+            self.lugarActual = lugar;
+            mostrarExito('Ha pedido una pista para ' + lugar);
         });
     };
 
@@ -76,31 +87,11 @@ app.controller("ResolverMisterioController", function($scope, $resource, Resolve
 
         ResolverMisterio.emitirOrden(ordenRequest, function(data) {
             self.ordenEmitida = self.villanoSeleccionado;
-            mostrarMensaje(data);
+            mostrarExito(data);
         }, errorHandler);
     };
 
     this.seleccionarVillano = function() {
         self.villanoSeleccionado = $scope.ordenSelector;
     };
-
-    this.msgs = [];
-
-    this.notificarMensaje = function(mensaje) {
-        this.msgs.push(mensaje);
-        this.notificar(this.msgs);
-    };
-
-    this.errors = [];
-    this.notificarError = function(mensaje) {
-        this.errors.push(mensaje);
-        this.notificar(this.errors);
-    };
-
-    this.notificar = function(mensajes) {
-        $timeout(function() {
-            while (mensajes.length > 0) mensajes.pop();
-        }, 3000);
-    };
-
 });

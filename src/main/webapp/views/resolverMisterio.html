@@ -1,10 +1,5 @@
-<div class="alert alert-success" style="display: none; position: fixed; top: 50px; width: 100%; z-index: 1000">
-  <strong>Exito!</strong> You should.
-</div>
-
-<div class="alert alert-danger" style="display: none; position: fixed; top: 50px; width: 100%; z-index: 1000">
-  <strong>Error!</strong> You should.
-</div>
+<div class="alert alert-success col-md-10" style="display: none; position: fixed; top: 50px; z-index: 1000"></div>
+<div class="alert alert-danger col-md-10" style="display: none; position: fixed; top: 50px; z-index: 1000"></div>
 
 <div class="page-header">
     <h1>
@@ -63,7 +58,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>First Name</th>
+                        <th>Nombre</th>
                     </tr>
                 </thead>
                 <tbody ng-repeat="pais in resolverMisterioCtrl.destinosFallidos">
@@ -73,9 +68,31 @@
                     </tr>
                 </tbody>
             </table>
-
         </div>
 
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                    Destinos Visitados
+                </h3>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="pais in resolverMisterioCtrl.paisesVisitados">
+                    <tr>
+                        <th scope="row"> {{$index + 1}} </th>
+                        <td> {{pais.nombre}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
 
     </div>
@@ -95,9 +112,9 @@
             <div class="list-group">
 
                 <a class="list-group-item" ng-repeat="lugar in resolverMisterioCtrl.paisActual.lugares" 
-                    data-ng-click="resolverMisterioCtrl.pedirPista(lugar)">
+                    data-ng-click="resolverMisterioCtrl.pedirPista(lugar)" style="cursor: pointer;">
                     <div class="media-left">
-                        <img class="media-object" src="..." alt="...">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">{{lugar}}</h4>
@@ -118,12 +135,8 @@
                 </h3>
             </div>
             <div class="panel-body">
-                <p>
-                    {{ResolverMisterioCtrl.pistaActual}}
-                </p>
-
-                <button type="button" class="btn btn-default btn-block">Block level button</button>
-
+                <h3> Lugar visitado: {{ resolverMisterioCtrl.lugarActual }} </h3>
+                <p> {{ resolverMisterioCtrl.pistaActual }} </p>
             </div>
         </div>
 
@@ -138,7 +151,7 @@
 
             <div>
                 <label>Emitida contra:</label>
-                <span class="orden-emitida-js">{{resolverMisterioCtrl.ordenEmitida}}</span>
+                <span> {{resolverMisterioCtrl.ordenEmitida}} </span>
             </div>
 
             <label for="orden">Emitir Orden de arresto contra:</label>
