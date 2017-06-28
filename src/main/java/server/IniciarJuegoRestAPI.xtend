@@ -1,4 +1,4 @@
-package server
+package main.java.server
 
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.json.JSONUtils
@@ -23,11 +23,12 @@ import miniModel.MiniExpediente
 import miniModel.MiniVillano
 import carmenSanDiego.Villano
 import miniModel.MiniPaisConConxYCarac
+import miniModel.MiniLugar
 
 @Controller
 class IniciarJuegoRestAPI {
 	
-    extension JSONUtils = new server.CarmenSonUtils
+    extension JSONUtils = new CarmenSonUtils
     
 	CarmenSanDiegoRepoWeb repo
     
@@ -56,7 +57,7 @@ class IniciarJuegoRestAPI {
     	response.contentType = ContentType.APPLICATION_JSON
     	var Juego caso = repo.getCaso(Integer.valueOf(id)) as Juego
     	val lugarActual = caso.paisActual.getLugar(lugar)
-    	ok(caso.pedirPista(lugarActual).toJson)
+    	ok(new MiniLugar(caso.pedirPista(lugarActual)).toJson)
     }
     
     /*
