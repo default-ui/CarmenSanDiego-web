@@ -1,4 +1,4 @@
-package main.java.server
+package server
 
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.json.JSONUtils
@@ -24,6 +24,7 @@ import miniModel.MiniVillano
 import carmenSanDiego.Villano
 import miniModel.MiniPaisConConxYCarac
 import miniModel.MiniLugar
+import miniModel.EstadoRequest
 
 @Controller
 class IniciarJuegoRestAPI {
@@ -234,6 +235,33 @@ class IniciarJuegoRestAPI {
 		this.repo.expediente.reemplazarVillanoConId(Integer.parseInt(id), villano)
 		ok()
 	}
+	
+	@Get("/ordenDeArresto/:id")
+    def getOrdendeArresto() {
+    	try{
+    	response.contentType = ContentType.APPLICATION_JSON
+    	var Juego caso = repo.getCaso(Integer.valueOf(id)) as Juego
+    	val orden = caso.ordenDeArresto.villano
+    	ok(new MiniVillano(orden).toJson)
+    	}
+   	catch(NullPointerException e){
+    		ok(null.toJson) 
+    		
+    	}
+    }
+    
+            /*
+     * Request con la forma http://localhost:3000/obtenerJuego.
+     * Obtiene el estado actual de un juego
+     */
+    @Post("/obtenerJuego")
+    def getPartidaID(@Body String body) {
+    	
+        var idJuego = body.fromJson(EstadoRequest)
+    	
+    	var juego = this.repo.getCaso(idJuego.casoID)
+       	ok(new EstadoJuego(juego).toJson)
+    }
    
  }
    
